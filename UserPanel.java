@@ -1,10 +1,8 @@
 package potatobeetlesapp;
 
-import java.awt.Color;
-
 public class UserPanel extends javax.swing.JPanel {
 
-    private Field field;
+    private Field field; //картофельное поле
     
     public UserPanel() {
         initComponents();
@@ -17,6 +15,8 @@ public class UserPanel extends javax.swing.JPanel {
     private void updateInfo() {
         if (field != null) {
             countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
+            countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
+            countDiedPlantsLabel.setText(String.valueOf(field.getPlantsNumber() - field.getAlivePlantsNumber()));
         }
     }
     
@@ -40,7 +40,7 @@ public class UserPanel extends javax.swing.JPanel {
         countDiedPlantsLabel = new javax.swing.JLabel();
         infectedPlantsLabel = new javax.swing.JLabel();
         countPotatoLabel = new javax.swing.JLabel();
-        resetButton = new javax.swing.JButton();
+        againButton = new javax.swing.JButton();
         settingsPanel = new javax.swing.JPanel();
         numTubersLabel = new javax.swing.JLabel();
         numPlantsLabel = new javax.swing.JLabel();
@@ -53,8 +53,10 @@ public class UserPanel extends javax.swing.JPanel {
         effTubersSpinner = new javax.swing.JSpinner();
         effPlantsSpinner = new javax.swing.JSpinner();
         stepButton = new javax.swing.JButton();
-        startButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
+        applyButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -115,7 +117,7 @@ public class UserPanel extends javax.swing.JPanel {
                         .addComponent(countAlivePlantsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addComponent(infectedPlantsLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
                         .addComponent(countInfectPlantsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(infoPanelLayout.createSequentialGroup()
                         .addComponent(potatoLabel)
@@ -150,13 +152,13 @@ public class UserPanel extends javax.swing.JPanel {
                 .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(potatoLabel)
                     .addComponent(countPotatoLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        resetButton.setText("Сброс");
-        resetButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                resetButtonActionPerformed(evt);
+        againButton.setText("Заново");
+        againButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                againButtonMouseClicked(evt);
             }
         });
 
@@ -250,6 +252,14 @@ public class UserPanel extends javax.swing.JPanel {
 
         stepButton.setText("Шаг");
 
+        stopButton.setText("Стоп");
+        stopButton.setEnabled(false);
+        stopButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stopButtonMouseClicked(evt);
+            }
+        });
+
         startButton.setText("Старт");
         startButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -257,7 +267,14 @@ public class UserPanel extends javax.swing.JPanel {
             }
         });
 
-        stopButton.setText("Стоп");
+        applyButton.setText("Применить");
+
+        resetButton.setText("Сброс");
+        resetButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -268,14 +285,19 @@ public class UserPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(settingsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(infoPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(stopButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(startButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(stepButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(resetButton)))
+                        .addComponent(againButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(applyButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(resetButton)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -285,26 +307,22 @@ public class UserPanel extends javax.swing.JPanel {
                 .addComponent(settingsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(applyButton)
+                    .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(stopButton)
                     .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(stepButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
-                .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stepButton)
+                    .addComponent(againButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     
-    //Нажатие кнопки "Сброс"
-    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        numTubersSpinner.setValue(0);
-        numPlantsSpinner.setValue(0);
-        effTubersSpinner.setValue(90);
-        effPlantsSpinner.setValue(60);
-        collectBugsToggleButton.setSelected(false);
-    }//GEN-LAST:event_resetButtonActionPerformed
-    
+   
     //Нажатие кнопки включения/выключения сбора жуков
     private void collectBugsToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_collectBugsToggleButtonStateChanged
         if (collectBugsToggleButton.isSelected()) {
@@ -316,12 +334,43 @@ public class UserPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_collectBugsToggleButtonStateChanged
 
     private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startButtonMouseClicked
-        updateInfo();
+        //updateInfo();
+        stopButton.setEnabled(true);
+        startButton.setEnabled(false);
+        stepButton.setEnabled(false);
+        againButton.setEnabled(false);
+        applyButton.setEnabled(false);
     }//GEN-LAST:event_startButtonMouseClicked
+
+    private void resetButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetButtonMouseClicked
+        numTubersSpinner.setValue(0);
+        numPlantsSpinner.setValue(0);
+        effTubersSpinner.setValue(90);
+        effPlantsSpinner.setValue(60);
+        collectBugsToggleButton.setSelected(false);
+    }//GEN-LAST:event_resetButtonMouseClicked
+
+    private void againButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_againButtonMouseClicked
+        countWeekLabel.setText("0");
+        //countPotatoLabel.setText("0");
+        //countInfectPlantsLabel.setText("0");
+        //countAlivePlantsLabel.setText("0");
+        //countDiedPlantsLabel.setText("0");
+    }//GEN-LAST:event_againButtonMouseClicked
+
+    private void stopButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stopButtonMouseClicked
+        stopButton.setEnabled(false);
+        startButton.setEnabled(true);
+        stepButton.setEnabled(true);
+        againButton.setEnabled(true);
+        applyButton.setEnabled(true);
+    }//GEN-LAST:event_stopButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton againButton;
     private javax.swing.JLabel alivePlantsLabel;
+    private javax.swing.JButton applyButton;
     private javax.swing.JLabel collectBugsLabel;
     private javax.swing.JToggleButton collectBugsToggleButton;
     private javax.swing.JLabel countAlivePlantsLabel;

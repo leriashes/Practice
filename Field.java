@@ -3,6 +3,8 @@ import potatobeetlesapp.plants.*;
 
 public class Field extends javax.swing.JPanel {
     private int plantsNumber;
+    private int alivePlantsNumber;
+    private int infectPlantsNumber;
     private int maxPotatoNumber;
     private int potatoNumber;
     private Plant[] plants;
@@ -10,6 +12,9 @@ public class Field extends javax.swing.JPanel {
     public Field() {
         initComponents();
         plantsNumber = 130;
+        alivePlantsNumber = 0;
+        infectPlantsNumber = 0;
+        
         plants = new Plant[plantsNumber];
         
         for (int i = 0; i < plantsNumber; i++) {
@@ -17,7 +22,7 @@ public class Field extends javax.swing.JPanel {
         }
         
         maxPotatoNumber = plantsNumber * 8;
-        potatoNumber = maxPotatoNumber;
+        updateInfo();
     }
     
     public int getMaxPotatoNumber() {
@@ -25,7 +30,29 @@ public class Field extends javax.swing.JPanel {
     }
     
     public int getPotatoNumber() {
+        updateInfo();
         return potatoNumber;
+    }
+    
+    public int getPlantsNumber() {
+        return plantsNumber;
+    }
+    
+    public int getAlivePlantsNumber() {
+        updateInfo();
+        return alivePlantsNumber;
+    }
+    
+    private void updateInfo() {
+        potatoNumber = 0;
+        alivePlantsNumber = 0;
+        for (int i = 0; i < plantsNumber; i++) {
+            if(plants[i].isAlive()) {
+                alivePlantsNumber++;
+                potatoNumber += plants[i].getPotatoNumber();
+                //proverka na jukov
+            }
+        }
     }
 
     /**

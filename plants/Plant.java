@@ -1,18 +1,25 @@
 package potatobeetlesapp.plants;
 
 public class Plant {
-    private int leavesNumber;
-    private int potatoNumber;
-    private int ripeness;
+    protected int leavesNumber;
+    protected int potatoNumber;
+    protected int ripeness;
     protected boolean alive;
     
-    private String picture;
+    protected String picture;
     
     public Plant() {
-        ripeness = 5;
+        leavesNumber = 0;
+        potatoNumber = 8;
+        ripeness = 0;
+        alive = true;
     }
     
     public boolean isAlive() {
         return alive;
+    }
+    
+    public int getPotatoNumber() {
+        return potatoNumber;
     }
 }
