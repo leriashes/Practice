@@ -10,9 +10,6 @@ package potatobeetlesapp;
  */
 public class UserPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form UserPanel
-     */
     public UserPanel() {
         initComponents();
     }
@@ -42,7 +39,7 @@ public class UserPanel extends javax.swing.JPanel {
         numTubersLabel = new javax.swing.JLabel();
         numPlantsLabel = new javax.swing.JLabel();
         collectBugsLabel = new javax.swing.JLabel();
-        colleectBugsToggleButton = new javax.swing.JToggleButton();
+        collectBugsToggleButton = new javax.swing.JToggleButton();
         effTubersLabel = new javax.swing.JLabel();
         effPlantsLabel = new javax.swing.JLabel();
         numTubersSpinner = new javax.swing.JSpinner();
@@ -151,6 +148,11 @@ public class UserPanel extends javax.swing.JPanel {
         );
 
         resetButton.setText("Сброс");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
 
         settingsPanel.setBackground(new java.awt.Color(255, 255, 255));
         settingsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Параметры", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Trebuchet MS", 2, 14))); // NOI18N
@@ -164,10 +166,10 @@ public class UserPanel extends javax.swing.JPanel {
         collectBugsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         collectBugsLabel.setText("Сбор жуков вручную");
 
-        colleectBugsToggleButton.setText("Включить");
-        colleectBugsToggleButton.addChangeListener(new javax.swing.event.ChangeListener() {
+        collectBugsToggleButton.setText("Включить");
+        collectBugsToggleButton.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                colleectBugsToggleButtonStateChanged(evt);
+                collectBugsToggleButtonStateChanged(evt);
             }
         });
 
@@ -181,9 +183,9 @@ public class UserPanel extends javax.swing.JPanel {
 
         numPlantsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 130, 1));
 
-        effTubersSpinner.setModel(new javax.swing.SpinnerNumberModel(60, 0, 100, 1));
+        effTubersSpinner.setModel(new javax.swing.SpinnerNumberModel(90, 0, 100, 1));
 
-        effPlantsSpinner.setModel(new javax.swing.SpinnerNumberModel(90, 0, 100, 1));
+        effPlantsSpinner.setModel(new javax.swing.SpinnerNumberModel(60, 0, 100, 1));
 
         javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
         settingsPanel.setLayout(settingsPanelLayout);
@@ -211,7 +213,7 @@ public class UserPanel extends javax.swing.JPanel {
                     .addGroup(settingsPanelLayout.createSequentialGroup()
                         .addComponent(collectBugsLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(colleectBugsToggleButton)))
+                        .addComponent(collectBugsToggleButton)))
                 .addContainerGap())
         );
         settingsPanelLayout.setVerticalGroup(
@@ -236,7 +238,7 @@ public class UserPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(collectBugsLabel)
-                    .addComponent(colleectBugsToggleButton))
+                    .addComponent(collectBugsToggleButton))
                 .addGap(13, 13, 13))
         );
 
@@ -282,20 +284,30 @@ public class UserPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void colleectBugsToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_colleectBugsToggleButtonStateChanged
-        if (colleectBugsToggleButton.isSelected()) {
-            colleectBugsToggleButton.setText("Выключить");
+    //Нажатие кнопки "Сбор жуков вручную"
+    private void collectBugsToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_collectBugsToggleButtonStateChanged
+        if (collectBugsToggleButton.isSelected()) {
+            collectBugsToggleButton.setText("Выключить");
         }
         else {
-            colleectBugsToggleButton.setText("Включить");
+            collectBugsToggleButton.setText("Включить");
         }
-    }//GEN-LAST:event_colleectBugsToggleButtonStateChanged
+    }//GEN-LAST:event_collectBugsToggleButtonStateChanged
+
+    //Нажатие кнопки "Сброс"
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        numTubersSpinner.setValue(0);
+        numPlantsSpinner.setValue(0);
+        effTubersSpinner.setValue(90);
+        effPlantsSpinner.setValue(60);
+        collectBugsToggleButton.setSelected(false);
+    }//GEN-LAST:event_resetButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel alivePlantsLabel;
     private javax.swing.JLabel collectBugsLabel;
-    private javax.swing.JToggleButton colleectBugsToggleButton;
+    private javax.swing.JToggleButton collectBugsToggleButton;
     private javax.swing.JLabel countAlivePlantsLabel;
     private javax.swing.JLabel countDiedPlantsLabel;
     private javax.swing.JLabel countInfectPlantsLabel;
