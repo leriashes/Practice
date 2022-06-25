@@ -1,19 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package potatobeetlesapp;
 
-/**
- *
- * @author valeriashevcenko
- */
+import java.awt.Color;
+
 public class UserPanel extends javax.swing.JPanel {
 
+    private Field field;
+    
     public UserPanel() {
         initComponents();
     }
+    
+    public void setField(Field newField) {
+        field = newField;
+    }
 
+    private void updateInfo() {
+        if (field != null) {
+            countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -164,7 +170,7 @@ public class UserPanel extends javax.swing.JPanel {
         numPlantsLabel.setText("Число обработанных растений");
 
         collectBugsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
-        collectBugsLabel.setText("Сбор жуков вручную");
+        collectBugsLabel.setText("Сбор жуков");
 
         collectBugsToggleButton.setText("Включить");
         collectBugsToggleButton.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -245,6 +251,11 @@ public class UserPanel extends javax.swing.JPanel {
         stepButton.setText("Шаг");
 
         startButton.setText("Старт");
+        startButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                startButtonMouseClicked(evt);
+            }
+        });
 
         stopButton.setText("Стоп");
 
@@ -278,13 +289,23 @@ public class UserPanel extends javax.swing.JPanel {
                     .addComponent(stopButton)
                     .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(stepButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
                 .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    //Нажатие кнопки "Сбор жуков вручную"
+    
+    //Нажатие кнопки "Сброс"
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        numTubersSpinner.setValue(0);
+        numPlantsSpinner.setValue(0);
+        effTubersSpinner.setValue(90);
+        effPlantsSpinner.setValue(60);
+        collectBugsToggleButton.setSelected(false);
+    }//GEN-LAST:event_resetButtonActionPerformed
+    
+    //Нажатие кнопки включения/выключения сбора жуков
     private void collectBugsToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_collectBugsToggleButtonStateChanged
         if (collectBugsToggleButton.isSelected()) {
             collectBugsToggleButton.setText("Выключить");
@@ -294,14 +315,9 @@ public class UserPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_collectBugsToggleButtonStateChanged
 
-    //Нажатие кнопки "Сброс"
-    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-        numTubersSpinner.setValue(0);
-        numPlantsSpinner.setValue(0);
-        effTubersSpinner.setValue(90);
-        effPlantsSpinner.setValue(60);
-        collectBugsToggleButton.setSelected(false);
-    }//GEN-LAST:event_resetButtonActionPerformed
+    private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startButtonMouseClicked
+        updateInfo();
+    }//GEN-LAST:event_startButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

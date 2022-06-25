@@ -4,6 +4,7 @@ public class MainForm extends javax.swing.JFrame {
     //Конструктор
     public MainForm() {
         initComponents();
+        userPanel.setField(field);
     }
 
     /**
@@ -17,8 +18,9 @@ public class MainForm extends javax.swing.JFrame {
 
         backgroundPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
-        fieldPanel = new javax.swing.JPanel();
         userPanel = new potatobeetlesapp.UserPanel();
+        field = new potatobeetlesapp.Field();
+        beetlePicture = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Колорадские жуки");
@@ -29,49 +31,33 @@ public class MainForm extends javax.swing.JFrame {
         backgroundPanel.setBackground(new java.awt.Color(207, 244, 170));
         backgroundPanel.setName(""); // NOI18N
         backgroundPanel.setPreferredSize(new java.awt.Dimension(1200, 720));
-        backgroundPanel.setSize(new java.awt.Dimension(1200, 720));
+        backgroundPanel.setLayout(null);
 
         titleLabel.setFont(new java.awt.Font("Trebuchet MS", 3, 24)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("Модель распространения колорадского жука на картофельном поле");
+        backgroundPanel.add(titleLabel);
+        titleLabel.setBounds(0, 0, 1202, 45);
+        backgroundPanel.add(userPanel);
+        userPanel.setBounds(6, 63, 450, 651);
 
-        fieldPanel.setBackground(new java.awt.Color(133, 103, 73));
-
-        javax.swing.GroupLayout fieldPanelLayout = new javax.swing.GroupLayout(fieldPanel);
-        fieldPanel.setLayout(fieldPanelLayout);
-        fieldPanelLayout.setHorizontalGroup(
-            fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 734, Short.MAX_VALUE)
+        javax.swing.GroupLayout fieldLayout = new javax.swing.GroupLayout(field);
+        field.setLayout(fieldLayout);
+        fieldLayout.setHorizontalGroup(
+            fieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        fieldPanelLayout.setVerticalGroup(
-            fieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+        fieldLayout.setVerticalGroup(
+            fieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout backgroundPanelLayout = new javax.swing.GroupLayout(backgroundPanel);
-        backgroundPanel.setLayout(backgroundPanelLayout);
-        backgroundPanelLayout.setHorizontalGroup(
-            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(userPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(fieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        backgroundPanelLayout.setVerticalGroup(
-            backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundPanelLayout.createSequentialGroup()
-                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(backgroundPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundPanelLayout.createSequentialGroup()
-                        .addComponent(fieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 91, Short.MAX_VALUE))
-                    .addComponent(userPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        backgroundPanel.add(field);
+        field.setBounds(468, 63, 728, 651);
+
+        beetlePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/colorado.png"))); // NOI18N
+        backgroundPanel.add(beetlePicture);
+        beetlePicture.setBounds(150, -20, 50, 80);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,16 +101,15 @@ public class MainForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainForm().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JPanel fieldPanel;
+    private javax.swing.JLabel beetlePicture;
+    private potatobeetlesapp.Field field;
     private javax.swing.JLabel titleLabel;
     private potatobeetlesapp.UserPanel userPanel;
     // End of variables declaration//GEN-END:variables
