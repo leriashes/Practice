@@ -1,17 +1,25 @@
 package potatobeetlesapp;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class UserPanel extends javax.swing.JPanel {
 
     private Field field; //картофельное поле
     
+    //Конструктор
     public UserPanel() {
         initComponents();
     }
     
+    //Выбор поля
     public void setField(Field newField) {
         field = newField;
     }
 
+    //Обновление информации
     private void updateInfo() {
         if (field != null) {
             countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
@@ -65,7 +73,7 @@ public class UserPanel extends javax.swing.JPanel {
 
         countWeekLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         countWeekLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        countWeekLabel.setText("0");
+        countWeekLabel.setText("1");
 
         alivePlantsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         alivePlantsLabel.setText("Число живых растений");
@@ -83,7 +91,7 @@ public class UserPanel extends javax.swing.JPanel {
 
         countAlivePlantsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         countAlivePlantsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        countAlivePlantsLabel.setText("0");
+        countAlivePlantsLabel.setText("130");
 
         countInfectPlantsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         countInfectPlantsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -251,6 +259,11 @@ public class UserPanel extends javax.swing.JPanel {
         );
 
         stepButton.setText("Шаг");
+        stepButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stepButtonMouseClicked(evt);
+            }
+        });
 
         stopButton.setText("Стоп");
         stopButton.setEnabled(false);
@@ -333,6 +346,7 @@ public class UserPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_collectBugsToggleButtonStateChanged
 
+    //Нажатие кнопки старт
     private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startButtonMouseClicked
         //updateInfo();
         stopButton.setEnabled(true);
@@ -340,8 +354,18 @@ public class UserPanel extends javax.swing.JPanel {
         stepButton.setEnabled(false);
         againButton.setEnabled(false);
         applyButton.setEnabled(false);
+        
+        /*Timer myTimer;
+	myTimer = new Timer();
+
+	myTimer.schedule(new TimerTask() {
+		public void run() {
+			stepButtonMouseClicked(evt);
+		}
+	}, 0, 2000); // каждые 5 секунд*/
     }//GEN-LAST:event_startButtonMouseClicked
 
+    //Нажатие кнопки сброс
     private void resetButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetButtonMouseClicked
         numTubersSpinner.setValue(0);
         numPlantsSpinner.setValue(0);
@@ -349,15 +373,21 @@ public class UserPanel extends javax.swing.JPanel {
         effPlantsSpinner.setValue(60);
         collectBugsToggleButton.setSelected(false);
     }//GEN-LAST:event_resetButtonMouseClicked
-
+    
+    //Нажатие кнопки заново
     private void againButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_againButtonMouseClicked
         countWeekLabel.setText("0");
+        countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
+        countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
+        countDiedPlantsLabel.setText(String.valueOf(130 - field.getAlivePlantsNumber()));
+        
         //countPotatoLabel.setText("0");
         //countInfectPlantsLabel.setText("0");
         //countAlivePlantsLabel.setText("0");
         //countDiedPlantsLabel.setText("0");
     }//GEN-LAST:event_againButtonMouseClicked
 
+    //Нажатие кнопки стоп
     private void stopButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stopButtonMouseClicked
         stopButton.setEnabled(false);
         startButton.setEnabled(true);
@@ -365,6 +395,11 @@ public class UserPanel extends javax.swing.JPanel {
         againButton.setEnabled(true);
         applyButton.setEnabled(true);
     }//GEN-LAST:event_stopButtonMouseClicked
+
+    //Нажатие кнопки шаг
+    private void stepButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stepButtonMouseClicked
+        countWeekLabel.setText(String.valueOf(Integer.parseInt(countWeekLabel.getText()) + 1));
+    }//GEN-LAST:event_stepButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

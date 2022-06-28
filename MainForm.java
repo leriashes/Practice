@@ -39,7 +39,7 @@ public class MainForm extends javax.swing.JFrame {
         backgroundPanel.add(titleLabel);
         titleLabel.setBounds(0, 0, 1202, 45);
         backgroundPanel.add(userPanel);
-        userPanel.setBounds(6, 63, 450, 651);
+        userPanel.setBounds(6, 63, 450, 566);
 
         javax.swing.GroupLayout fieldLayout = new javax.swing.GroupLayout(field);
         field.setLayout(fieldLayout);
@@ -53,7 +53,7 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         backgroundPanel.add(field);
-        field.setBounds(468, 63, 728, 651);
+        field.setBounds(468, 63, 728, 566);
 
         beetlePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/colorado.png"))); // NOI18N
         backgroundPanel.add(beetlePicture);
@@ -67,7 +67,9 @@ public class MainForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -81,7 +83,8 @@ public class MainForm extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        */
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

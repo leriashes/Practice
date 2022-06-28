@@ -1,12 +1,12 @@
 package potatobeetlesapp.plants;
 
-public class Plant {
+public class Plant extends javax.swing.JLabel {
     protected int leavesNumber;
     protected int potatoNumber;
     protected int ripeness;
     protected boolean alive;
     
-    protected String picture;
+    protected String pictureAddress;
     
     public Plant() {
         leavesNumber = 0;

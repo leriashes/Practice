@@ -1,4 +1,6 @@
 package potatobeetlesapp;
+import java.awt.Color;
+import javax.swing.UIManager;
 import potatobeetlesapp.plants.*;
 
 public class Field extends javax.swing.JPanel {
@@ -19,10 +21,13 @@ public class Field extends javax.swing.JPanel {
         
         for (int i = 0; i < plantsNumber; i++) {
             plants[i] = new Tuber();
+            plants[i].setBounds(6 + 56 * (i % 13), 6 + 56 * (i / 13), 50, 50);
+            add(plants[i]);
         }
         
         maxPotatoNumber = plantsNumber * 8;
         updateInfo();
+        
     }
     
     public int getMaxPotatoNumber() {
@@ -65,17 +70,8 @@ public class Field extends javax.swing.JPanel {
     private void initComponents() {
 
         setBackground(new java.awt.Color(147, 118, 89));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 663, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
-        );
+        setFocusable(false);
+        setLayout(null);
     }// </editor-fold>//GEN-END:initComponents
 
 
