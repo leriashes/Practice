@@ -4,20 +4,24 @@ import javax.swing.UIManager;
 import potatobeetlesapp.plants.*;
 
 public class Field extends javax.swing.JPanel {
-    private int plantsNumber;
-    private int alivePlantsNumber;
-    private int infectPlantsNumber;
-    private int maxPotatoNumber;
-    private int potatoNumber;
-    private Plant[] plants;
+    private int plantsNumber;   //Количество растений
+    private int alivePlantsNumber;  //Количество живых растений
+    private int infectPlantsNumber; //Количество растений с жуками
+    private int maxPotatoNumber;    //Максимальный урожай
+    private int potatoNumber;   //Возможный урожай на текущий момент
+    private Plant[] plants; //Растения
     
+    //Конструктор
     public Field() {
         initComponents();
         plantsNumber = 130;
-        alivePlantsNumber = 0;
-        infectPlantsNumber = 0;
-        
         plants = new Plant[plantsNumber];
+        start();
+    }
+    
+    private void start() {
+        alivePlantsNumber = plantsNumber;
+        infectPlantsNumber = 0;
         
         for (int i = 0; i < plantsNumber; i++) {
             plants[i] = new Tuber();
@@ -27,27 +31,32 @@ public class Field extends javax.swing.JPanel {
         
         maxPotatoNumber = plantsNumber * 8;
         updateInfo();
-        
     }
     
+    //Максимальное количество плодов
     public int getMaxPotatoNumber() {
         return maxPotatoNumber;
     }
     
+    //Возможное количество плодов на текущий момент
     public int getPotatoNumber() {
         updateInfo();
         return potatoNumber;
     }
     
+    //Количество растений
     public int getPlantsNumber() {
+        updateInfo();
         return plantsNumber;
     }
     
+    //Количество живых растений
     public int getAlivePlantsNumber() {
         updateInfo();
         return alivePlantsNumber;
     }
     
+    //Обновление информации
     private void updateInfo() {
         potatoNumber = 0;
         alivePlantsNumber = 0;

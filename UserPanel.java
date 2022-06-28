@@ -2,8 +2,6 @@ package potatobeetlesapp;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UserPanel extends javax.swing.JPanel {
 
@@ -17,6 +15,7 @@ public class UserPanel extends javax.swing.JPanel {
     //Выбор поля
     public void setField(Field newField) {
         field = newField;
+        start();
     }
 
     //Обновление информации
@@ -26,6 +25,13 @@ public class UserPanel extends javax.swing.JPanel {
             countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
             countDiedPlantsLabel.setText(String.valueOf(field.getPlantsNumber() - field.getAlivePlantsNumber()));
         }
+    }
+    
+    private void start() {
+        countWeekLabel.setText("0");
+        countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
+        countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
+        countDiedPlantsLabel.setText(String.valueOf(field.getPlantsNumber() - field.getAlivePlantsNumber()));
     }
     
     /**
@@ -73,7 +79,7 @@ public class UserPanel extends javax.swing.JPanel {
 
         countWeekLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         countWeekLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        countWeekLabel.setText("1");
+        countWeekLabel.setText("0");
 
         alivePlantsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         alivePlantsLabel.setText("Число живых растений");
@@ -91,7 +97,7 @@ public class UserPanel extends javax.swing.JPanel {
 
         countAlivePlantsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         countAlivePlantsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        countAlivePlantsLabel.setText("130");
+        countAlivePlantsLabel.setText("0");
 
         countInfectPlantsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
         countInfectPlantsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -376,10 +382,7 @@ public class UserPanel extends javax.swing.JPanel {
     
     //Нажатие кнопки заново
     private void againButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_againButtonMouseClicked
-        countWeekLabel.setText("0");
-        countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
-        countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
-        countDiedPlantsLabel.setText(String.valueOf(130 - field.getAlivePlantsNumber()));
+        start();
         
         //countPotatoLabel.setText("0");
         //countInfectPlantsLabel.setText("0");
@@ -399,6 +402,7 @@ public class UserPanel extends javax.swing.JPanel {
     //Нажатие кнопки шаг
     private void stepButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stepButtonMouseClicked
         countWeekLabel.setText(String.valueOf(Integer.parseInt(countWeekLabel.getText()) + 1));
+        updateInfo();
     }//GEN-LAST:event_stepButtonMouseClicked
 
 

@@ -1,13 +1,14 @@
 package potatobeetlesapp.plants;
 
 public class Plant extends javax.swing.JLabel {
-    protected int leavesNumber;
-    protected int potatoNumber;
-    protected int ripeness;
-    protected boolean alive;
+    protected int leavesNumber; //Количество листьев
+    protected int potatoNumber; //Количество плодов (картофелин)
+    protected int ripeness;     //Зрелость
+    protected boolean alive;    //Живое/неживое
     
-    protected String pictureAddress;
+    protected String pictureAddress;    //Адрес картинки
     
+    //Конструктор
     public Plant() {
         leavesNumber = 0;
         potatoNumber = 8;
@@ -15,10 +16,12 @@ public class Plant extends javax.swing.JLabel {
         alive = true;
     }
     
+    //Живо растение или нет
     public boolean isAlive() {
         return alive;
     }
     
+    //Количество плодов
     public int getPotatoNumber() {
         return potatoNumber;
     }
