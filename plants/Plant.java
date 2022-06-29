@@ -1,6 +1,6 @@
 package potatobeetlesapp.plants;
 
-public class Plant extends javax.swing.JLabel {
+public abstract class Plant extends javax.swing.JLabel {
     protected int leavesNumber; //Количество листьев
     protected int potatoNumber; //Количество плодов (картофелин)
     protected int ripeness;     //Зрелость
@@ -25,4 +25,7 @@ public class Plant extends javax.swing.JLabel {
     public int getPotatoNumber() {
         return potatoNumber;
     }
+
+    public abstract Plant grow();
+    public abstract Plant die();
 }

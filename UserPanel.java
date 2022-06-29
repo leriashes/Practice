@@ -6,10 +6,12 @@ import java.util.TimerTask;
 public class UserPanel extends javax.swing.JPanel {
 
     private Field field; //картофельное поле
+    private TreatmentDrug drug; //препарат для обработки
     
     //Конструктор
     public UserPanel() {
         initComponents();
+        drug = new TreatmentDrug();
     }
     
     //Выбор поля
@@ -196,10 +198,10 @@ public class UserPanel extends javax.swing.JPanel {
         });
 
         effTubersLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
-        effTubersLabel.setText("Эффективность обработки клубней (%)");
+        effTubersLabel.setText("MAX эффективность обработки клубней (%)");
 
         effPlantsLabel.setFont(new java.awt.Font("Trebuchet MS", 0, 14)); // NOI18N
-        effPlantsLabel.setText("Эффективность обработки растений (%)");
+        effPlantsLabel.setText("MAX эффективность обработки растений (%)");
 
         numTubersSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 130, 1));
 
@@ -228,7 +230,7 @@ public class UserPanel extends javax.swing.JPanel {
                         .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(effTubersLabel)
                             .addComponent(effPlantsLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addGroup(settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(effTubersSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(effPlantsSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -287,6 +289,11 @@ public class UserPanel extends javax.swing.JPanel {
         });
 
         applyButton.setText("Применить");
+        applyButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                applyButtonMouseClicked(evt);
+            }
+        });
 
         resetButton.setText("Сброс");
         resetButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -404,6 +411,11 @@ public class UserPanel extends javax.swing.JPanel {
         countWeekLabel.setText(String.valueOf(Integer.parseInt(countWeekLabel.getText()) + 1));
         updateInfo();
     }//GEN-LAST:event_stepButtonMouseClicked
+
+    private void applyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applyButtonMouseClicked
+        drug.SetEffTubers((Integer)effTubersSpinner.getValue());
+        drug.SetEffPlants((Integer)effPlantsSpinner.getValue());
+    }//GEN-LAST:event_applyButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -24,11 +24,15 @@ public class Field extends javax.swing.JPanel {
         infectPlantsNumber = 0;
         
         for (int i = 0; i < plantsNumber; i++) {
-            plants[i] = new Tuber();
-            plants[i].setBounds(6 + 56 * (i % 13), 6 + 56 * (i / 13), 50, 50);
+            plants[i] = new Tuber(i);
+            //plants[i].setBounds(6 + 56 * (i % 13), 6 + 56 * (i / 13), 50, 50);
             add(plants[i]);
+            //plants[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        //setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         }
-        
+        remove(plants[5]);
+        plants[5] = plants[5].grow();
+        add(plants[5]);
         maxPotatoNumber = plantsNumber * 8;
         updateInfo();
     }
