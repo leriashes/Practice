@@ -1,6 +1,4 @@
 package potatobeetlesapp;
-import java.awt.Color;
-import javax.swing.UIManager;
 import potatobeetlesapp.plants.*;
 
 public class Field extends javax.swing.JPanel {
@@ -24,17 +22,21 @@ public class Field extends javax.swing.JPanel {
         infectPlantsNumber = 0;
         
         for (int i = 0; i < plantsNumber; i++) {
-            plants[i] = new Tuber(i);
-            //plants[i].setBounds(6 + 56 * (i % 13), 6 + 56 * (i / 13), 50, 50);
+            plants[i] = new Tuber();
             add(plants[i]);
-            //plants[i].setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        //setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         }
-        remove(plants[5]);
-        plants[5] = plants[5].grow();
-        add(plants[5]);
+        
         maxPotatoNumber = plantsNumber * 8;
         updateInfo();
+    }
+    
+    public void restart() {
+        for (int i = 0; i < plantsNumber; i++) {
+            remove(plants[i]);
+        }
+        repaint();
+        start();
+        repaint();
     }
     
     //Максимальное количество плодов
@@ -58,6 +60,17 @@ public class Field extends javax.swing.JPanel {
     public int getAlivePlantsNumber() {
         updateInfo();
         return alivePlantsNumber;
+    }
+    
+    public void nextWeek(int numWeek) {
+        for (int i =0; i < plantsNumber; i++) {
+            if (numWeek == 2) {    
+                remove(plants[i]);
+                plants[i] = plants[i].grow();
+                add(plants[i]);
+            } 
+        }
+        repaint();
     }
     
     //Обновление информации

@@ -6,6 +6,7 @@ public abstract class Plant extends javax.swing.JLabel {
     protected int ripeness;     //Зрелость
     protected boolean alive;    //Живое/неживое
     
+    
     protected String pictureAddress;    //Адрес картинки
     
     //Конструктор

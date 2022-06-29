@@ -389,6 +389,7 @@ public class UserPanel extends javax.swing.JPanel {
     
     //Нажатие кнопки заново
     private void againButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_againButtonMouseClicked
+        field.restart();
         start();
         
         //countPotatoLabel.setText("0");
@@ -408,7 +409,9 @@ public class UserPanel extends javax.swing.JPanel {
 
     //Нажатие кнопки шаг
     private void stepButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stepButtonMouseClicked
-        countWeekLabel.setText(String.valueOf(Integer.parseInt(countWeekLabel.getText()) + 1));
+        int week = Integer.parseInt(countWeekLabel.getText()) + 1;
+        countWeekLabel.setText(String.valueOf(week));
+        field.nextWeek(week);
         updateInfo();
     }//GEN-LAST:event_stepButtonMouseClicked
 

@@ -1,12 +1,15 @@
 package potatobeetlesapp.plants;
 
 public class Tuber extends Plant {
-    public Tuber(int number) {
+    private static int number = 0;
+    
+    public Tuber() {
         super();
         setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/tuber.png")));
-        setBounds(6 + 56 * (number % 13), 6 + 56 * (number / 13), 50, 50);
+        setBounds(6 + 56 * (number % 130 % 13), 6 + 56 * (number % 130 / 13), 50, 50);
         setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        number++;
     }
 
     @Override
