@@ -35,6 +35,7 @@ public abstract class Plant extends javax.swing.JPanel {
     public void beetles() {
         beetle.setVisible(true);
         coloradoPotatoBeetle = true;
+        setBackground(new java.awt.Color(130, 100, 70));
     }
     
     //Количество плодов

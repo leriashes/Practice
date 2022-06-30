@@ -45,7 +45,7 @@ public class MainForm extends javax.swing.JFrame {
         field.setLayout(fieldLayout);
         fieldLayout.setHorizontalGroup(
             fieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 739, Short.MAX_VALUE)
+            .addGap(0, 736, Short.MAX_VALUE)
         );
         fieldLayout.setVerticalGroup(
             fieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -53,7 +53,7 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         backgroundPanel.add(field);
-        field.setBounds(470, 40, 739, 724);
+        field.setBounds(470, 40, 736, 724);
 
         beetlePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/bug.png"))); // NOI18N
         backgroundPanel.add(beetlePicture);
@@ -63,7 +63,9 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1216, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1212, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
