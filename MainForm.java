@@ -39,23 +39,23 @@ public class MainForm extends javax.swing.JFrame {
         backgroundPanel.add(titleLabel);
         titleLabel.setBounds(0, 0, 1202, 45);
         backgroundPanel.add(userPanel);
-        userPanel.setBounds(6, 63, 450, 566);
+        userPanel.setBounds(10, 40, 450, 724);
 
         javax.swing.GroupLayout fieldLayout = new javax.swing.GroupLayout(field);
         field.setLayout(fieldLayout);
         fieldLayout.setHorizontalGroup(
             fieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 739, Short.MAX_VALUE)
         );
         fieldLayout.setVerticalGroup(
             fieldLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 724, Short.MAX_VALUE)
         );
 
         backgroundPanel.add(field);
-        field.setBounds(468, 63, 728, 566);
+        field.setBounds(470, 40, 739, 724);
 
-        beetlePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/colorado.png"))); // NOI18N
+        beetlePicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/bug.png"))); // NOI18N
         backgroundPanel.add(beetlePicture);
         beetlePicture.setBounds(150, -20, 50, 80);
 
@@ -63,12 +63,12 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1202, Short.MAX_VALUE)
+            .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1216, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(backgroundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 

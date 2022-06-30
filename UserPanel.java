@@ -33,6 +33,7 @@ public class UserPanel extends javax.swing.JPanel {
         countWeekLabel.setText("0");
         countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
         countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
+        countInfectPlantsLabel.setText(String.valueOf(field.getInfectedPlantsNumber()  ));
         countDiedPlantsLabel.setText(String.valueOf(field.getPlantsNumber() - field.getAlivePlantsNumber()));
     }
     
@@ -391,11 +392,6 @@ public class UserPanel extends javax.swing.JPanel {
     private void againButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_againButtonMouseClicked
         field.restart();
         start();
-        
-        //countPotatoLabel.setText("0");
-        //countInfectPlantsLabel.setText("0");
-        //countAlivePlantsLabel.setText("0");
-        //countDiedPlantsLabel.setText("0");
     }//GEN-LAST:event_againButtonMouseClicked
 
     //Нажатие кнопки стоп

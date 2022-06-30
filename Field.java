@@ -12,18 +12,29 @@ public class Field extends javax.swing.JPanel {
     //Конструктор
     public Field() {
         initComponents();
-        plantsNumber = 130;
+        plantsNumber = 100;
         plants = new Plant[plantsNumber];
         start();
     }
     
     private void start() {
         alivePlantsNumber = plantsNumber;
-        infectPlantsNumber = 0;
+        infectPlantsNumber = (int)(Math.random() * 50 + 1);
         
         for (int i = 0; i < plantsNumber; i++) {
             plants[i] = new Tuber();
             add(plants[i]);
+        }
+        
+        int j;
+        for (int i = 0; i < infectPlantsNumber; i++) {
+            j = (int)(Math.random() * plantsNumber);
+            if (!plants[j].isInfected()) {
+                plants[j].beetles();
+            }
+            else {
+                i--;
+            }
         }
         
         maxPotatoNumber = plantsNumber * 8;
@@ -34,7 +45,7 @@ public class Field extends javax.swing.JPanel {
         for (int i = 0; i < plantsNumber; i++) {
             remove(plants[i]);
         }
-        repaint();
+        //repaint();
         start();
         repaint();
     }
@@ -60,6 +71,10 @@ public class Field extends javax.swing.JPanel {
     public int getAlivePlantsNumber() {
         updateInfo();
         return alivePlantsNumber;
+    }
+    
+    public int getInfectedPlantsNumber() {
+        return infectPlantsNumber;
     }
     
     public void nextWeek(int numWeek) {

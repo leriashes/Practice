@@ -3,7 +3,8 @@ package potatobeetlesapp.plants;
 public class Sprout extends Plant {
     public Sprout() {
         super();
-        setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/sprout.png")));
+        setImage("/potatobeetlesapp/pictures/sprout.png");
+        //plant.setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/sprout.png")));
     }
 
     @Override

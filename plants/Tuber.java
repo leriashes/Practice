@@ -5,10 +5,8 @@ public class Tuber extends Plant {
     
     public Tuber() {
         super();
-        setIcon(new javax.swing.ImageIcon(getClass().getResource("/potatobeetlesapp/pictures/tuber.png")));
-        setBounds(6 + 56 * (number % 130 % 13), 6 + 56 * (number % 130 / 13), 50, 50);
-        setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        setImage("/potatobeetlesapp/pictures/tuber.png");
+        setBounds(3 + 73 * (number % 100 % 10), 73 * (number % 100 / 10), 70, 70);
         number++;
     }
 
@@ -16,8 +14,9 @@ public class Tuber extends Plant {
     public Plant grow() {
         Sprout next = new Sprout();
         next.setBounds(this.getBounds());
-        next.setHorizontalAlignment(this.getHorizontalAlignment());
-        next.setVerticalAlignment(this.getVerticalAlignment());
+        if (isInfected()) {
+            next.beetles();
+        }
         return next;
     }
 
