@@ -7,11 +7,13 @@ public class UserPanel extends javax.swing.JPanel {
 
     private Field field; //картофельное поле
     private TreatmentDrug drug; //препарат для обработки
+    private Timer myTimer;
     
     //Конструктор
     public UserPanel() {
         initComponents();
         drug = new TreatmentDrug();
+        probka();
     }
     
     //Выбор поля
@@ -35,6 +37,45 @@ public class UserPanel extends javax.swing.JPanel {
         countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
         countInfectPlantsLabel.setText(String.valueOf(field.getInfectedPlantsNumber()  ));
         countDiedPlantsLabel.setText(String.valueOf(field.getPlantsNumber() - field.getAlivePlantsNumber()));
+    }
+    
+    private void probka() {
+        int d = 30;
+        int k = 25;
+        int y = 5;
+        int h = 40;
+        
+        int[] counter;
+        counter = new int[4];
+        
+        for (int i = 0; i < 4; i++) {
+            counter[i] = 0;
+        }
+        
+        int hq;
+        
+        
+        for (int i = 0; i < 100000; i++) {
+            hq = (int)(Math.random() * 100 + 1);
+            
+            if (hq <= 5) {
+                counter[0] += 1;
+            }
+            else if (hq <= 30) {
+                counter[1] += 1;
+            }
+            else if (hq <= 60) {
+                counter[2] += 1;
+            }
+            else {
+                counter[3] += 1;
+            }
+        }
+        
+        for (int i = 0; i < 4; i++) {
+            System.out.print(counter[i] / 1000.0);
+            System.out.print(" ");
+        }
     }
     
     /**
@@ -362,21 +403,23 @@ public class UserPanel extends javax.swing.JPanel {
 
     //Нажатие кнопки старт
     private void startButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startButtonMouseClicked
-        //updateInfo();
-        stopButton.setEnabled(true);
-        startButton.setEnabled(false);
-        stepButton.setEnabled(false);
-        againButton.setEnabled(false);
-        applyButton.setEnabled(false);
-        
-        /*Timer myTimer;
-	myTimer = new Timer();
+        if (startButton.isEnabled()) {
+            //updateInfo();
+            stopButton.setEnabled(true);
+            startButton.setEnabled(false);
+            stepButton.setEnabled(false);
+            againButton.setEnabled(false);
+            applyButton.setEnabled(false);
 
-	myTimer.schedule(new TimerTask() {
-		public void run() {
-			stepButtonMouseClicked(evt);
-		}
-	}, 0, 2000); // каждые 5 секунд*/
+            myTimer = new Timer();
+
+            myTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                            stepButtonMouseClicked(evt);
+                    }
+            }, 0, 2000); // каждые 5 секунд
+        }
     }//GEN-LAST:event_startButtonMouseClicked
 
     //Нажатие кнопки сброс
@@ -392,28 +435,49 @@ public class UserPanel extends javax.swing.JPanel {
     private void againButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_againButtonMouseClicked
         field.restart();
         start();
+        startButton.setEnabled(true);
+        stepButton.setEnabled(true);
+        applyButton.setEnabled(true);
     }//GEN-LAST:event_againButtonMouseClicked
 
     //Нажатие кнопки стоп
     private void stopButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stopButtonMouseClicked
-        stopButton.setEnabled(false);
-        startButton.setEnabled(true);
-        stepButton.setEnabled(true);
-        againButton.setEnabled(true);
-        applyButton.setEnabled(true);
+        if (stopButton.isEnabled()) {
+            stopButton.setEnabled(false);
+            startButton.setEnabled(true);
+            stepButton.setEnabled(true);
+            againButton.setEnabled(true);
+
+            myTimer.cancel();
+        }
     }//GEN-LAST:event_stopButtonMouseClicked
 
     //Нажатие кнопки шаг
     private void stepButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stepButtonMouseClicked
         int week = Integer.parseInt(countWeekLabel.getText()) + 1;
-        countWeekLabel.setText(String.valueOf(week));
-        field.nextWeek(week);
-        updateInfo();
+        applyButton.setEnabled(false);
+
+        if (week <= 20) {
+            countWeekLabel.setText(String.valueOf(week));
+            field.nextWeek(week);
+            //updateInfo();
+
+            if (week == 20) {
+                if (stopButton.isEnabled()) {
+                    stopButtonMouseClicked(evt);
+                }
+
+                stepButton.setEnabled(false);
+                startButton.setEnabled(false);
+            }
+        }
     }//GEN-LAST:event_stepButtonMouseClicked
 
     private void applyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applyButtonMouseClicked
-        drug.SetEffTubers((Integer)effTubersSpinner.getValue());
-        drug.SetEffPlants((Integer)effPlantsSpinner.getValue());
+        if (applyButton.isEnabled()) {
+            drug.SetEffTubers((Integer)effTubersSpinner.getValue());
+            drug.SetEffPlants((Integer)effPlantsSpinner.getValue());
+        }
     }//GEN-LAST:event_applyButtonMouseClicked
 
 

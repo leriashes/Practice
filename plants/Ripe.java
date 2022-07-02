@@ -4,7 +4,7 @@ public class Ripe extends Plant {
     
     public Ripe() {
         super();
-        setImage("/potatobeetlesapp/pictures/grass.png");
+        setImage("/potatobeetlesapp/pictures/ripe.png");
     }
     
     @Override

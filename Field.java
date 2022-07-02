@@ -79,7 +79,7 @@ public class Field extends javax.swing.JPanel {
     
     public void nextWeek(int numWeek) {
         for (int i =0; i < plantsNumber; i++) {
-            if (numWeek == 2) {    
+            if (numWeek == 2 || numWeek == 6 || numWeek == 9) {    
                 remove(plants[i]);
                 plants[i] = plants[i].grow();
                 add(plants[i]);
