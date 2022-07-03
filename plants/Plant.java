@@ -8,6 +8,7 @@ public abstract class Plant extends javax.swing.JPanel {
     protected int ripeness;     //Зрелость
     protected boolean alive;    //Живое/неживое
     protected int coloradoPotatoBeetles;    //Количество жуков
+    protected int protection;   //Защита от жуков
     
     //Конструктор
     public Plant() {
@@ -17,6 +18,7 @@ public abstract class Plant extends javax.swing.JPanel {
         ripeness = 0;
         alive = true;
         coloradoPotatoBeetles = 0;
+        protection = 0;
         
         beetle.setVisible(false);
     }
@@ -39,9 +41,16 @@ public abstract class Plant extends javax.swing.JPanel {
     //Увеличение количества жуков
     public void beetlesCome(int number) {
         beetle.setVisible(true);
-        coloradoPotatoBeetles += number;
         
-        color();
+        if (coloradoPotatoBeetles > 20) {
+            setBackground(new java.awt.Color(255, 255, 255));
+            die();
+        }
+        else {
+            coloradoPotatoBeetles += number;
+            color();
+        }
+        jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
     }
     
     //Установка цвета фона
@@ -67,10 +76,10 @@ public abstract class Plant extends javax.swing.JPanel {
         if (coloradoPotatoBeetles <= 0) {
             coloradoPotatoBeetles = 0;
             beetle.setVisible(false);
-            //setBackground(new java.awt.Color(147, 118, 89));
         }
         
         color();
+        jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
     }
     
     //Количество плодов
@@ -86,6 +95,7 @@ public abstract class Plant extends javax.swing.JPanel {
     //Растение погибает
     public void die() {
         alive = false;
+        coloradoPotatoBeetles = 0;
         //change picture
     }
 
@@ -103,6 +113,7 @@ public abstract class Plant extends javax.swing.JPanel {
 
         beetle = new javax.swing.JLabel();
         plant = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(147, 118, 89));
         setLayout(null);
@@ -117,11 +128,17 @@ public abstract class Plant extends javax.swing.JPanel {
         plant.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         add(plant);
         plant.setBounds(0, 0, 60, 60);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("0");
+        add(jLabel1);
+        jLabel1.setBounds(30, 10, 40, 17);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel beetle;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel plant;
     // End of variables declaration//GEN-END:variables
 }

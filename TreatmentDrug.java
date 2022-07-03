@@ -16,8 +16,16 @@ public class TreatmentDrug {
         effTubers = value;
     }
     
+    public int getEffTubers() {
+        return effTubers;
+    }
+    
     //Эффективность обработки растений
     public void setEffPlants(int value) {
         effPlants = value;
+    }
+    
+    public int getEffPlants() {
+        return effPlants;
     }
 }

@@ -7,13 +7,11 @@ import java.util.TimerTask;
 public class UserPanel extends javax.swing.JPanel {
 
     private Field field;        //Картофельное поле
-    private TreatmentDrug drug; //Препарат для обработки
     private Timer myTimer;      //Таймер
     
     //Конструктор
     public UserPanel() {
         initComponents();
-        drug = new TreatmentDrug();
     }
     
     //Выбор поля
@@ -477,9 +475,7 @@ public class UserPanel extends javax.swing.JPanel {
 
     private void applyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applyButtonMouseClicked
         if (applyButton.isEnabled()) {
-            drug.setEffTubers((Integer)effTubersSpinner.getValue());
-            drug.setEffPlants((Integer)effPlantsSpinner.getValue());
-            field.setCollectingBugs(collectBugsToggleButton.isSelected());
+            field.setProperties((int)numTubersSpinner.getValue(), (int)numPlantsSpinner.getValue(), (int)effTubersSpinner.getValue(), (int)effPlantsSpinner.getValue(), collectBugsToggleButton.isSelected());
         }
     }//GEN-LAST:event_applyButtonMouseClicked
 

@@ -11,12 +11,18 @@ public class Field extends javax.swing.JPanel {
     private Plant[] plants;         //Растения
     
     private boolean collectingBugs; //Сбор жуков
+    protected TreatmentDrug drug;   //Препарат для обработки
+    private int numTubersTreatment;
+    private int numPlantsTreatment;
     
     //Конструктор
     public Field() {
         initComponents();
         plantsNumber = 100;
         plants = new Plant[plantsNumber];
+        drug = new TreatmentDrug();
+        numTubersTreatment = 0;
+        numPlantsTreatment = 0;
         start();
     }
     
@@ -26,7 +32,25 @@ public class Field extends javax.swing.JPanel {
         infectPlantsNumber = 0;
         
         for (int i = 0; i < plantsNumber; i++) {
-            plants[i] = new Tuber();
+            plants[i] = null;
+        }
+        
+        int j;
+        for (int i = 0; i < numTubersTreatment; i++) {
+            j = (int)(Math.random() * plantsNumber);
+            
+            if (plants[j] == null) {
+                plants[i] = new Tuber(drug.getEffTubers());
+            }
+            else {
+                i--;
+            }
+        }
+        
+        for (int i = 0; i < plantsNumber; i++) {
+            if (plants[i] == null) {
+                plants[i] = new Tuber();
+            }
             add(plants[i]);
         }
         
@@ -87,21 +111,73 @@ public class Field extends javax.swing.JPanel {
                     i--;
                 }
             }
-        }
+        } 
         else {
-            for (int i =0; i < plantsNumber; i++) {
-            if (numWeek == 2 || numWeek == 6 || numWeek == 9) {    
-                remove(plants[i]);
-                plants[i] = plants[i].grow();
-                add(plants[i]);
-            }
+            infectPlantsNumber = 0;
+            int[] bugs = new int[plantsNumber];
             
-            if (plants[i].isInfected()) {
-                if (collectingBugs) {
-                    plants[i].beetlesLeave((int)(Math.random() * 100 + 60) * plants[i].getBeetlesNumber() / 100);
+            for (int i = 0; i < plantsNumber; i++) {
+                
+                if(plants[i].isAlive()) {
+                    if (numWeek == 2 || numWeek == 6 || numWeek == 9) {    
+                        remove(plants[i]);
+                        plants[i] = plants[i].grow();
+                        add(plants[i]);
+                    }
+                    
+                    switch (i % 10) {
+                        case 0 -> {
+                            bugs[i] = plants[i + 1].getBeetlesNumber();
+                            if (i != 0) {
+                                bugs[i] += plants[i - 10].getBeetlesNumber() + plants[i - 9].getBeetlesNumber();
+                            }   if (i != plantsNumber - 10) {
+                                bugs[i] += plants[i + 10].getBeetlesNumber() + plants[i + 11].getBeetlesNumber();
+                            }
+                        }
+                        case 9 -> {
+                            bugs[i] = plants[i - 1].getBeetlesNumber();
+                            if (i != 9) {
+                                bugs[i] += plants[i - 10].getBeetlesNumber() + plants[i - 11].getBeetlesNumber();
+                            }   if (i != plantsNumber - 1) {
+                                bugs[i] += plants[i + 10].getBeetlesNumber() + plants[i + 9].getBeetlesNumber();
+                            }
+                        }
+                        default -> {
+                            bugs[i] = plants[i - 1].getBeetlesNumber() + plants[i + 1].getBeetlesNumber();
+                            if (i > 10) {
+                                bugs[i] += plants[i - 9].getBeetlesNumber() + plants[i - 10].getBeetlesNumber() + plants[i - 11].getBeetlesNumber();
+                            }   if (i < plantsNumber - 10) {
+                                bugs[i] += plants[i + 9].getBeetlesNumber() + plants[i + 10].getBeetlesNumber() + plants[i + 11].getBeetlesNumber();
+                            }
+                        }
+                    }
+
+                    bugs[i] = bugs[i] / 20 + plants[i].getBeetlesNumber() / 5;
+                    
+                    if (numWeek < 5) {
+                        bugs[i] += (int)(Math.random() * 4);
+                    }
+
+                    if (plants[i].isInfected()) {
+                        if (collectingBugs) {
+                            bugs[i] -= (int)(Math.random() * 90 + 70) * plants[i].getBeetlesNumber() / 100;
+                        }
+                    }
                 }
             }
-        }
+            
+            for (int i = 0; i < plantsNumber; i++) {
+                if (bugs[i] > 0) {
+                    plants[i].beetlesCome(bugs[i]);
+                }
+                else if (bugs[i] < 0) {
+                    plants[i].beetlesLeave(-bugs[i]);
+                }
+                
+                if (plants[i].isInfected()) {
+                    infectPlantsNumber += 1;
+                }
+            }
         }
         repaint();
     }
@@ -119,9 +195,12 @@ public class Field extends javax.swing.JPanel {
         }
     }
 
-    //Вкл./выкл. сбор жуков
-    public void setCollectingBugs(boolean value) {
-        collectingBugs = value;
+    public void setProperties(int numTubers, int numPlants, int effTubersTreatment, int effPlantsTreatment, boolean collectingBugs) {
+        numTubersTreatment = numTubers;
+        numPlantsTreatment = numPlants;
+        drug.setEffTubers(effTubersTreatment);
+        drug.setEffPlants(effPlantsTreatment);
+        this.collectingBugs = collectingBugs;
     }
     
     /**
