@@ -1,8 +1,10 @@
 package potatobeetlesapp.plants;
 
+//Клубень
 public class Tuber extends Plant {
-    private static int number = 0;
+    private static int number = 0; //Номер
     
+    //Конструктор
     public Tuber() {
         super();
         setImage("/potatobeetlesapp/pictures/tuber.png");

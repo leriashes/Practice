@@ -3,11 +3,12 @@ package potatobeetlesapp;
 import java.util.Timer;
 import java.util.TimerTask;
 
+//Панель настроек и информации
 public class UserPanel extends javax.swing.JPanel {
 
-    private Field field; //картофельное поле
-    private TreatmentDrug drug; //препарат для обработки
-    private Timer myTimer;
+    private Field field;        //Картофельное поле
+    private TreatmentDrug drug; //Препарат для обработки
+    private Timer myTimer;      //Таймер
     
     //Конструктор
     public UserPanel() {
@@ -31,6 +32,7 @@ public class UserPanel extends javax.swing.JPanel {
         }
     }
     
+    //Старт
     private void start() {
         countWeekLabel.setText("0");
         countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));

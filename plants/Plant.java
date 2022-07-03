@@ -1,12 +1,13 @@
 package potatobeetlesapp.plants;
 
+//Растение
 public abstract class Plant extends javax.swing.JPanel {
 
     protected int leavesNumber; //Количество листьев
     protected int potatoNumber; //Количество плодов (картофелин)
     protected int ripeness;     //Зрелость
     protected boolean alive;    //Живое/неживое
-    protected int coloradoPotatoBeetles;
+    protected int coloradoPotatoBeetles;    //Количество жуков
     
     //Конструктор
     public Plant() {
@@ -20,6 +21,7 @@ public abstract class Plant extends javax.swing.JPanel {
         beetle.setVisible(false);
     }
 
+    //Установка изображения
     protected void setImage(String address) {
         plant.setIcon(new javax.swing.ImageIcon(getClass().getResource(address)));
     }
@@ -29,10 +31,12 @@ public abstract class Plant extends javax.swing.JPanel {
         return alive;
     }
     
+    //Наличие жуков на растении
     public boolean isInfected() {
         return (coloradoPotatoBeetles > 0);
     }
     
+    //Увеличение количества жуков
     public void beetlesCome(int number) {
         beetle.setVisible(true);
         coloradoPotatoBeetles += number;
@@ -40,6 +44,7 @@ public abstract class Plant extends javax.swing.JPanel {
         color();
     }
     
+    //Установка цвета фона
     public void color() {
         if (coloradoPotatoBeetles == 0) {
             setBackground(new java.awt.Color(147, 118, 89));
@@ -55,6 +60,7 @@ public abstract class Plant extends javax.swing.JPanel {
         }
     }
     
+    //Уменьшение количества жуков
     public void beetlesLeave(int number) {
         coloradoPotatoBeetles -= number;
         
@@ -72,15 +78,18 @@ public abstract class Plant extends javax.swing.JPanel {
         return potatoNumber;
     }
     
+    //Количество жуков
     public int getBeetlesNumber() {
         return coloradoPotatoBeetles;
     }
     
+    //Растение погибает
     public void die() {
         alive = false;
         //change picture
     }
 
+    //Растение вырастает
     public abstract Plant grow();
     
     /**

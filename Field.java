@@ -1,15 +1,16 @@
 package potatobeetlesapp;
 import potatobeetlesapp.plants.*;
 
+//Поле
 public class Field extends javax.swing.JPanel {
-    private int plantsNumber;   //Количество растений
+    private int plantsNumber;       //Количество растений
     private int alivePlantsNumber;  //Количество живых растений
     private int infectPlantsNumber; //Количество растений с жуками
     private int maxPotatoNumber;    //Максимальный урожай
-    private int potatoNumber;   //Возможный урожай на текущий момент
-    private Plant[] plants; //Растения
+    private int potatoNumber;       //Возможный урожай на текущий момент
+    private Plant[] plants;         //Растения
     
-    private boolean collectingBugs;
+    private boolean collectingBugs; //Сбор жуков
     
     //Конструктор
     public Field() {
@@ -19,6 +20,7 @@ public class Field extends javax.swing.JPanel {
         start();
     }
     
+    //Старт (инициализация растений)
     private void start() {
         alivePlantsNumber = plantsNumber;
         infectPlantsNumber = 0;
@@ -32,6 +34,7 @@ public class Field extends javax.swing.JPanel {
         updateInfo();
     }
     
+    //Заново
     public void restart() {
         for (int i = 0; i < plantsNumber; i++) {
             remove(plants[i]);
@@ -64,10 +67,12 @@ public class Field extends javax.swing.JPanel {
         return alivePlantsNumber;
     }
     
+    //Количество заражённых растений
     public int getInfectedPlantsNumber() {
         return infectPlantsNumber;
     }
     
+    //Следующая неделя
     public void nextWeek(int numWeek) {
         if (numWeek == 1) {
             infectPlantsNumber = (int)(Math.random() * 50 + 1);
@@ -114,6 +119,7 @@ public class Field extends javax.swing.JPanel {
         }
     }
 
+    //Вкл./выкл. сбор жуков
     public void setCollectingBugs(boolean value) {
         collectingBugs = value;
     }

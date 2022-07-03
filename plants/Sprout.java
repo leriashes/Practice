@@ -1,6 +1,9 @@
 package potatobeetlesapp.plants;
 
+//Росток
 public class Sprout extends Plant {
+    
+    //Конструктор
     public Sprout() {
         super();
         setImage("/potatobeetlesapp/pictures/sprout.png");
