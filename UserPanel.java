@@ -13,7 +13,6 @@ public class UserPanel extends javax.swing.JPanel {
     public UserPanel() {
         initComponents();
         drug = new TreatmentDrug();
-        probka();
     }
     
     //Выбор поля
@@ -28,6 +27,7 @@ public class UserPanel extends javax.swing.JPanel {
             countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
             countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
             countDiedPlantsLabel.setText(String.valueOf(field.getPlantsNumber() - field.getAlivePlantsNumber()));
+            countInfectPlantsLabel.setText(String.valueOf(field.getInfectedPlantsNumber()));
         }
     }
     
@@ -35,11 +35,11 @@ public class UserPanel extends javax.swing.JPanel {
         countWeekLabel.setText("0");
         countPotatoLabel.setText(String.valueOf(field.getPotatoNumber()));
         countAlivePlantsLabel.setText(String.valueOf(field.getAlivePlantsNumber()));
-        countInfectPlantsLabel.setText(String.valueOf(field.getInfectedPlantsNumber()  ));
+        countInfectPlantsLabel.setText(String.valueOf(field.getInfectedPlantsNumber()));
         countDiedPlantsLabel.setText(String.valueOf(field.getPlantsNumber() - field.getAlivePlantsNumber()));
     }
     
-    private void probka() {
+    /*private void probability() {
         int d = 30;
         int k = 25;
         int y = 5;
@@ -76,7 +76,7 @@ public class UserPanel extends javax.swing.JPanel {
             System.out.print(counter[i] / 1000.0);
             System.out.print(" ");
         }
-    }
+    }*/
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -389,8 +389,6 @@ public class UserPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    
-   
     //Нажатие кнопки включения/выключения сбора жуков
     private void collectBugsToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_collectBugsToggleButtonStateChanged
         if (collectBugsToggleButton.isSelected()) {
@@ -470,13 +468,16 @@ public class UserPanel extends javax.swing.JPanel {
                 stepButton.setEnabled(false);
                 startButton.setEnabled(false);
             }
+            
+            updateInfo();
         }
     }//GEN-LAST:event_stepButtonMouseClicked
 
     private void applyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applyButtonMouseClicked
         if (applyButton.isEnabled()) {
-            drug.SetEffTubers((Integer)effTubersSpinner.getValue());
-            drug.SetEffPlants((Integer)effPlantsSpinner.getValue());
+            drug.setEffTubers((Integer)effTubersSpinner.getValue());
+            drug.setEffPlants((Integer)effPlantsSpinner.getValue());
+            field.setCollectingBugs(collectBugsToggleButton.isSelected());
         }
     }//GEN-LAST:event_applyButtonMouseClicked
 

@@ -9,11 +9,11 @@ public class TreatmentDrug {
         effPlants = 60;
     }
     
-    public void SetEffTubers(int value) {
+    public void setEffTubers(int value) {
         effTubers = value;
     }
     
-    public void SetEffPlants(int value) {
+    public void setEffPlants(int value) {
         effPlants = value;
     }
 }

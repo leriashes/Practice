@@ -12,13 +12,8 @@ public class Flowering extends Plant {
         Ripe next = new Ripe();
         next.setBounds(this.getBounds());
         if (isInfected()) {
-            next.beetles();
+            next.beetlesCome(this.getBeetlesNumber());
         }
         return next;
-    }
-
-    @Override
-    public Plant die() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

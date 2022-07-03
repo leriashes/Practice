@@ -9,6 +9,8 @@ public class Field extends javax.swing.JPanel {
     private int potatoNumber;   //Возможный урожай на текущий момент
     private Plant[] plants; //Растения
     
+    private boolean collectingBugs;
+    
     //Конструктор
     public Field() {
         initComponents();
@@ -19,22 +21,11 @@ public class Field extends javax.swing.JPanel {
     
     private void start() {
         alivePlantsNumber = plantsNumber;
-        infectPlantsNumber = (int)(Math.random() * 50 + 1);
+        infectPlantsNumber = 0;
         
         for (int i = 0; i < plantsNumber; i++) {
             plants[i] = new Tuber();
             add(plants[i]);
-        }
-        
-        int j;
-        for (int i = 0; i < infectPlantsNumber; i++) {
-            j = (int)(Math.random() * plantsNumber);
-            if (!plants[j].isInfected()) {
-                plants[j].beetles();
-            }
-            else {
-                i--;
-            }
         }
         
         maxPotatoNumber = plantsNumber * 8;
@@ -78,12 +69,34 @@ public class Field extends javax.swing.JPanel {
     }
     
     public void nextWeek(int numWeek) {
-        for (int i =0; i < plantsNumber; i++) {
+        if (numWeek == 1) {
+            infectPlantsNumber = (int)(Math.random() * 50 + 1);
+            
+            int j;
+            for (int i = 0; i < infectPlantsNumber; i++) {
+                j = (int)(Math.random() * plantsNumber);
+                if (!plants[j].isInfected()) {
+                    plants[j].beetlesCome((int)(Math.random() * 6 + 1));
+                }
+                else {
+                    i--;
+                }
+            }
+        }
+        else {
+            for (int i =0; i < plantsNumber; i++) {
             if (numWeek == 2 || numWeek == 6 || numWeek == 9) {    
                 remove(plants[i]);
                 plants[i] = plants[i].grow();
                 add(plants[i]);
-            } 
+            }
+            
+            if (plants[i].isInfected()) {
+                if (collectingBugs) {
+                    plants[i].beetlesLeave((int)(Math.random() * 100 + 60) * plants[i].getBeetlesNumber() / 100);
+                }
+            }
+        }
         }
         repaint();
     }
@@ -101,6 +114,10 @@ public class Field extends javax.swing.JPanel {
         }
     }
 
+    public void setCollectingBugs(boolean value) {
+        collectingBugs = value;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

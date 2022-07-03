@@ -6,7 +6,7 @@ public abstract class Plant extends javax.swing.JPanel {
     protected int potatoNumber; //Количество плодов (картофелин)
     protected int ripeness;     //Зрелость
     protected boolean alive;    //Живое/неживое
-    protected boolean coloradoPotatoBeetle;
+    protected int coloradoPotatoBeetles;
     
     //Конструктор
     public Plant() {
@@ -15,6 +15,7 @@ public abstract class Plant extends javax.swing.JPanel {
         potatoNumber = 8;
         ripeness = 0;
         alive = true;
+        coloradoPotatoBeetles = 0;
         
         beetle.setVisible(false);
     }
@@ -29,22 +30,58 @@ public abstract class Plant extends javax.swing.JPanel {
     }
     
     public boolean isInfected() {
-        return coloradoPotatoBeetle;
+        return (coloradoPotatoBeetles > 0);
     }
     
-    public void beetles() {
+    public void beetlesCome(int number) {
         beetle.setVisible(true);
-        coloradoPotatoBeetle = true;
-        setBackground(new java.awt.Color(130, 100, 70));
+        coloradoPotatoBeetles += number;
+        
+        color();
+    }
+    
+    public void color() {
+        if (coloradoPotatoBeetles == 0) {
+            setBackground(new java.awt.Color(147, 118, 89));
+        }
+        else if (coloradoPotatoBeetles < 5) {
+            setBackground(new java.awt.Color(255, 255, 102));
+        }
+        else if (coloradoPotatoBeetles < 12) {
+            setBackground(new java.awt.Color(255, 205, 102));
+        }
+        else {
+            setBackground(new java.awt.Color(255, 155, 102));
+        }
+    }
+    
+    public void beetlesLeave(int number) {
+        coloradoPotatoBeetles -= number;
+        
+        if (coloradoPotatoBeetles <= 0) {
+            coloradoPotatoBeetles = 0;
+            beetle.setVisible(false);
+            //setBackground(new java.awt.Color(147, 118, 89));
+        }
+        
+        color();
     }
     
     //Количество плодов
     public int getPotatoNumber() {
         return potatoNumber;
     }
+    
+    public int getBeetlesNumber() {
+        return coloradoPotatoBeetles;
+    }
+    
+    public void die() {
+        alive = false;
+        //change picture
+    }
 
     public abstract Plant grow();
-    public abstract Plant die();
     
     /**
      * This method is called from within the constructor to initialize the form.
