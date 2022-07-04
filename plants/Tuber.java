@@ -1,41 +1,34 @@
 package potatobeetlesapp.plants;
 
-//Клубень
-import potatobeetlesapp.TreatmentDrug;
-
 public class Tuber extends Plant {
-    private static int number = 0; //Номер
     
     //Конструктор
-    public Tuber() {
+    public Tuber(int number) {
         super();
         setImage("/potatobeetlesapp/pictures/tuber.png");
         setBounds(3 + 73 * (number % 100 % 10), 73 * (number % 100 / 10), 70, 70);
-        number++;
     }
     
     //Конструктор
-    public Tuber(int efficiency) {
+    public Tuber(int number, int efficiency) {
         super();
         setImage("/potatobeetlesapp/pictures/tuber.png");
         setBounds(3 + 73 * (number % 100 % 10), 73 * (number % 100 / 10), 70, 70);
-        tuberTreatment(efficiency);
-        number++;
+        treatTuber(efficiency);
     }
 
     @Override
     public Plant grow() {
-        Sprout next = new Sprout();
+        Sprout next = new Sprout(protection);
         next.setBounds(this.getBounds());
         if (isInfected()) {
-            next.beetlesCome(this.getBeetlesNumber());
+            next.beetlesLeave(-this.getBeetlesNumber());
         }
-        number--;
         return next;
     }
     
     //Обработка клубня
-    public final void tuberTreatment(int efficiency) {
-        protection = (int)(Math.random() * efficiency + efficiency - 30) * 100 / 70;
+    public final void treatTuber(int efficiency) {
+        protection = (int)(Math.random() * 30 + Math.abs(efficiency - 30)) * 70 / 100;
     }
 }

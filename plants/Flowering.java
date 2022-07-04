@@ -4,23 +4,24 @@ import potatobeetlesapp.TreatmentDrug;
 
 public class Flowering extends Plant {
 
-    public Flowering() {
+    public Flowering(int protection) {
         super();
         setImage("/potatobeetlesapp/pictures/flowering.png");
+        this.protection = protection;
     }
     
     @Override
     public Plant grow() {
-        Ripe next = new Ripe();
+        Ripe next = new Ripe(protection);
         next.setBounds(this.getBounds());
         if (isInfected()) {
-            next.beetlesCome(this.getBeetlesNumber());
+            next.beetlesLeave(-this.getBeetlesNumber());
         }
         return next;
     }
     
     //Обработка растения
     public void plantTreatment(TreatmentDrug drug) {
-        protection += (int)(Math.random() * drug.getEffPlants() + drug.getEffPlants() - 30) * 100 / 30;
+        protection += (int)(Math.random() * 30 + Math.abs(drug.getEffPlants() - 30)) * 100 / 30;
     }
 }

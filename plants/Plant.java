@@ -40,16 +40,19 @@ public abstract class Plant extends javax.swing.JPanel {
     
     //Увеличение количества жуков
     public void beetlesCome(int number) {
-        beetle.setVisible(true);
         
         if (coloradoPotatoBeetles > 20) {
             setBackground(new java.awt.Color(255, 255, 255));
             die();
         }
         else {
-            coloradoPotatoBeetles += number;
+            coloradoPotatoBeetles += number * (100 - protection) / 100;
             color();
         }
+        
+        if (coloradoPotatoBeetles > 0)
+            beetle.setVisible(true);
+        
         jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
     }
     
@@ -64,8 +67,11 @@ public abstract class Plant extends javax.swing.JPanel {
         else if (coloradoPotatoBeetles < 12) {
             setBackground(new java.awt.Color(255, 205, 102));
         }
-        else {
+        else if (coloradoPotatoBeetles < 20){
             setBackground(new java.awt.Color(255, 155, 102));
+        }
+        else {
+            setBackground(new java.awt.Color(255, 105, 102));
         }
     }
     
@@ -76,6 +82,9 @@ public abstract class Plant extends javax.swing.JPanel {
         if (coloradoPotatoBeetles <= 0) {
             coloradoPotatoBeetles = 0;
             beetle.setVisible(false);
+        }
+        else {
+            beetle.setVisible(true);
         }
         
         color();

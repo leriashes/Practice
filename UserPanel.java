@@ -455,12 +455,12 @@ public class UserPanel extends javax.swing.JPanel {
         int week = Integer.parseInt(countWeekLabel.getText()) + 1;
         applyButton.setEnabled(false);
 
-        if (week <= 20) {
+        if (week <= 20 && field.getAlivePlantsNumber() >= 0) {
             countWeekLabel.setText(String.valueOf(week));
             field.nextWeek(week);
             //updateInfo();
 
-            if (week == 20) {
+            if (week == 20 || field.getAlivePlantsNumber() == 0) {
                 if (stopButton.isEnabled()) {
                     stopButtonMouseClicked(evt);
                 }
@@ -476,6 +476,7 @@ public class UserPanel extends javax.swing.JPanel {
     private void applyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applyButtonMouseClicked
         if (applyButton.isEnabled()) {
             field.setProperties((int)numTubersSpinner.getValue(), (int)numPlantsSpinner.getValue(), (int)effTubersSpinner.getValue(), (int)effPlantsSpinner.getValue(), collectBugsToggleButton.isSelected());
+            field.restart();
         }
     }//GEN-LAST:event_applyButtonMouseClicked
 

@@ -40,7 +40,7 @@ public class Field extends javax.swing.JPanel {
             j = (int)(Math.random() * plantsNumber);
             
             if (plants[j] == null) {
-                plants[i] = new Tuber(drug.getEffTubers());
+                plants[j] = new Tuber(j, drug.getEffTubers());
             }
             else {
                 i--;
@@ -49,7 +49,7 @@ public class Field extends javax.swing.JPanel {
         
         for (int i = 0; i < plantsNumber; i++) {
             if (plants[i] == null) {
-                plants[i] = new Tuber();
+                plants[i] = new Tuber(i);
             }
             add(plants[i]);
         }
@@ -99,7 +99,7 @@ public class Field extends javax.swing.JPanel {
     //Следующая неделя
     public void nextWeek(int numWeek) {
         if (numWeek == 1) {
-            infectPlantsNumber = (int)(Math.random() * 50 + 1);
+            infectPlantsNumber = (int)(Math.random() * (plantsNumber / 2) + 1);
             
             int j;
             for (int i = 0; i < infectPlantsNumber; i++) {
@@ -152,7 +152,7 @@ public class Field extends javax.swing.JPanel {
                         }
                     }
 
-                    bugs[i] = bugs[i] / 20 + plants[i].getBeetlesNumber() / 5;
+                    bugs[i] = bugs[i] / 16 + plants[i].getBeetlesNumber() / 4;
                     
                     if (numWeek < 5) {
                         bugs[i] += (int)(Math.random() * 4);
@@ -160,7 +160,8 @@ public class Field extends javax.swing.JPanel {
 
                     if (plants[i].isInfected()) {
                         if (collectingBugs) {
-                            bugs[i] -= (int)(Math.random() * 90 + 70) * plants[i].getBeetlesNumber() / 100;
+                            bugs[i] -= (int)(Math.random() * 31 + 70) * plants[i].getBeetlesNumber() / 100 + 1;
+                            i += 0;
                         }
                     }
                 }
@@ -201,6 +202,7 @@ public class Field extends javax.swing.JPanel {
         drug.setEffTubers(effTubersTreatment);
         drug.setEffPlants(effPlantsTreatment);
         this.collectingBugs = collectingBugs;
+        //start();
     }
     
     /**

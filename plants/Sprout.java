@@ -4,17 +4,19 @@ package potatobeetlesapp.plants;
 public class Sprout extends Plant {
     
     //Конструктор
-    public Sprout() {
+    public Sprout(int protection) {
         super();
         setImage("/potatobeetlesapp/pictures/sprout.png");
+        this.protection = protection;
     }
 
     @Override
     public Plant grow() {
-        Flowering next = new Flowering();
+        Flowering next = new Flowering(protection);
         next.setBounds(this.getBounds());
+        
         if (isInfected()) {
-            next.beetlesCome(this.getBeetlesNumber());
+            next.beetlesLeave(-this.getBeetlesNumber());
         }
         return next;
     }

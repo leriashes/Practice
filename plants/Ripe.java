@@ -2,9 +2,10 @@ package potatobeetlesapp.plants;
 
 public class Ripe extends Plant {
     
-    public Ripe() {
+    public Ripe(int protection) {
         super();
         setImage("/potatobeetlesapp/pictures/ripe.png");
+        this.protection = protection;
     }
     
     @Override
