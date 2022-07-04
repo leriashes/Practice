@@ -19,9 +19,4 @@ public class Flowering extends Plant {
         }
         return next;
     }
-    
-    //Обработка растения
-    public void plantTreatment(TreatmentDrug drug) {
-        protection += (int)(Math.random() * 30 + Math.abs(drug.getEffPlants() - 30)) * 100 / 30;
-    }
 }

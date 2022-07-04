@@ -108,6 +108,10 @@ public abstract class Plant extends javax.swing.JPanel {
         //change picture
     }
 
+    public void treatPlant(int efficiency) {
+        protection += (int)(Math.random() * 30 + Math.abs(efficiency - 30)) * 30 / 100;
+    }
+    
     //Растение вырастает
     public abstract Plant grow();
     

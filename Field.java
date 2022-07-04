@@ -98,6 +98,27 @@ public class Field extends javax.swing.JPanel {
     
     //Следующая неделя
     public void nextWeek(int numWeek) {
+        boolean[] treatment = new boolean[plantsNumber];
+        
+        if (numWeek == 5) {
+            
+            for (int i = 0; i < plantsNumber; i++) {
+                treatment[i] = false;
+            }
+            
+            int j;
+            for (int i = 0; i < numPlantsTreatment; i++) {
+                j = (int)(Math.random() * plantsNumber);
+
+                if (!treatment[j]) {
+                    treatment[j] = true;
+                }
+                else {
+                    i--;
+                }
+            }
+        }
+        
         if (numWeek == 1) {
             infectPlantsNumber = (int)(Math.random() * (plantsNumber / 2) + 1);
             
@@ -118,7 +139,12 @@ public class Field extends javax.swing.JPanel {
             
             for (int i = 0; i < plantsNumber; i++) {
                 
-                if(plants[i].isAlive()) {
+                if (plants[i].isAlive()) {
+                    
+                    if (numWeek == 5 && treatment[i]) {
+                        plants[i].treatPlant(drug.getEffPlants());
+                    }
+                    
                     if (numWeek == 2 || numWeek == 6 || numWeek == 9) {    
                         remove(plants[i]);
                         plants[i] = plants[i].grow();
@@ -188,7 +214,7 @@ public class Field extends javax.swing.JPanel {
         potatoNumber = 0;
         alivePlantsNumber = 0;
         for (int i = 0; i < plantsNumber; i++) {
-            if(plants[i].isAlive()) {
+            if (plants[i].isAlive()) {
                 alivePlantsNumber++;
                 potatoNumber += plants[i].getPotatoNumber();
                 //proverka na jukov
