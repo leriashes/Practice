@@ -31,4 +31,9 @@ public class Tuber extends Plant {
     public final void treatTuber(int efficiency) {
         protection = (int)(Math.random() * 30 + Math.abs(efficiency - 30)) * 70 / 100;
     }
+
+    @Override
+    public void leavesGrow() {
+        leaves = 0;
+    }
 }

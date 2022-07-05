@@ -139,7 +139,11 @@ public class Field extends javax.swing.JPanel {
             
             for (int i = 0; i < plantsNumber; i++) {
                 
+                int num = 0;
+                
                 if (plants[i].isAlive()) {
+                    
+                    num = plants[i].getBeetlesNumber();
                     
                     if (numWeek == 5 && treatment[i]) {
                         plants[i].treatPlant(drug.getEffPlants());
@@ -150,13 +154,20 @@ public class Field extends javax.swing.JPanel {
                         plants[i] = plants[i].grow();
                         add(plants[i]);
                     }
-                    
+                    else {
+                        plants[i].leavesGrow();
+                    }
+                }
+                
+                if (plants[i].isAlive()) {
                     switch (i % 10) {
                         case 0 -> {
                             bugs[i] = plants[i + 1].getBeetlesNumber();
                             if (i != 0) {
                                 bugs[i] += plants[i - 10].getBeetlesNumber() + plants[i - 9].getBeetlesNumber();
-                            }   if (i != plantsNumber - 10) {
+                            }   
+                            
+                            if (i != plantsNumber - 10) {
                                 bugs[i] += plants[i + 10].getBeetlesNumber() + plants[i + 11].getBeetlesNumber();
                             }
                         }
@@ -164,7 +175,9 @@ public class Field extends javax.swing.JPanel {
                             bugs[i] = plants[i - 1].getBeetlesNumber();
                             if (i != 9) {
                                 bugs[i] += plants[i - 10].getBeetlesNumber() + plants[i - 11].getBeetlesNumber();
-                            }   if (i != plantsNumber - 1) {
+                            }   
+                            
+                            if (i != plantsNumber - 1) {
                                 bugs[i] += plants[i + 10].getBeetlesNumber() + plants[i + 9].getBeetlesNumber();
                             }
                         }
@@ -172,7 +185,9 @@ public class Field extends javax.swing.JPanel {
                             bugs[i] = plants[i - 1].getBeetlesNumber() + plants[i + 1].getBeetlesNumber();
                             if (i > 10) {
                                 bugs[i] += plants[i - 9].getBeetlesNumber() + plants[i - 10].getBeetlesNumber() + plants[i - 11].getBeetlesNumber();
-                            }   if (i < plantsNumber - 10) {
+                            }   
+                            
+                            if (i < plantsNumber - 10) {
                                 bugs[i] += plants[i + 9].getBeetlesNumber() + plants[i + 10].getBeetlesNumber() + plants[i + 11].getBeetlesNumber();
                             }
                         }
@@ -185,9 +200,53 @@ public class Field extends javax.swing.JPanel {
                     }
 
                     if (plants[i].isInfected()) {
-                        if (collectingBugs) {
-                            bugs[i] -= (int)(Math.random() * 31 + 70) * plants[i].getBeetlesNumber() / 100 + 1;
+                        if (collectingBugs && numWeek % 2 == 0) {
+                            bugs[i] -= (int)(Math.random() * 16 + 60) * plants[i].getBeetlesNumber() / 100 + (int)(Math.random() * 2);
                             i += 0;
+                        }
+                    }
+                }
+                else if (num > 0 && !plants[i].isAlive()) {
+                    switch (i % 10) {
+                        case 0 -> {
+                            plants[i + 1].beetlesCome(num / 9);
+                            if (i != 0) {
+                                plants[i - 9].beetlesCome(num / 9);
+                                plants[i - 10].beetlesCome(num / 9);
+                            }   
+                            
+                            if (i != plantsNumber - 10) {
+                                plants[i + 10].beetlesCome(num / 9);
+                                plants[i + 11].beetlesCome(num / 9);
+                            }
+                        }
+                        case 9 -> {
+                            plants[i - 1].beetlesCome(num / 9);
+                            if (i != 9) {
+                                plants[i - 10].beetlesCome(num / 9);
+                                plants[i - 11].beetlesCome(num / 9);
+                            }   
+                            
+                            if (i != plantsNumber - 1) {
+                                plants[i + 10].beetlesCome(num / 9);
+                                plants[i + 9].beetlesCome(num / 9);
+                            }
+                        }
+                        default -> {
+                            plants[i - 1].beetlesCome(num / 9);
+                            plants[i + 1].beetlesCome(num / 9);
+                            
+                            if (i > 10) {
+                                plants[i - 9].beetlesCome(num / 9);
+                                plants[i - 10].beetlesCome(num / 9);
+                                plants[i - 11].beetlesCome(num / 9);
+                            }   
+                            
+                            if (i < plantsNumber - 10) {
+                                plants[i + 9].beetlesCome(num / 9);
+                                plants[i + 10].beetlesCome(num / 9);
+                                plants[i + 11].beetlesCome(num / 9);
+                            }
                         }
                     }
                 }

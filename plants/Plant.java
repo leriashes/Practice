@@ -3,9 +3,9 @@ package potatobeetlesapp.plants;
 //Растение
 public abstract class Plant extends javax.swing.JPanel {
 
-    protected int leavesNumber; //Количество листьев
+    protected int leaves; //Листья (вес в мг)
     protected int potatoNumber; //Количество плодов (картофелин)
-    protected int ripeness;     //Зрелость
+    //protected int ripeness;     //Зрелость
     protected boolean alive;    //Живое/неживое
     protected int coloradoPotatoBeetles;    //Количество жуков
     protected int protection;   //Защита от жуков
@@ -13,9 +13,9 @@ public abstract class Plant extends javax.swing.JPanel {
     //Конструктор
     public Plant() {
         initComponents();
-        leavesNumber = 0;
+        leaves = 0;
         potatoNumber = 8;
-        ripeness = 0;
+        //ripeness = 0;
         alive = true;
         coloradoPotatoBeetles = 0;
         protection = 0;
@@ -41,19 +41,16 @@ public abstract class Plant extends javax.swing.JPanel {
     //Увеличение количества жуков
     public void beetlesCome(int number) {
         
-        if (coloradoPotatoBeetles > 20) {
-            setBackground(new java.awt.Color(255, 255, 255));
-            die();
-        }
-        else {
+        if (alive) {
             coloradoPotatoBeetles += number * (100 - protection) / 100;
             color();
+
+            if (coloradoPotatoBeetles > 0)
+                beetle.setVisible(true);
+
+            jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
         }
         
-        if (coloradoPotatoBeetles > 0)
-            beetle.setVisible(true);
-        
-        jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
     }
     
     //Установка цвета фона
@@ -77,18 +74,21 @@ public abstract class Plant extends javax.swing.JPanel {
     
     //Уменьшение количества жуков
     public void beetlesLeave(int number) {
-        coloradoPotatoBeetles -= number;
         
-        if (coloradoPotatoBeetles <= 0) {
-            coloradoPotatoBeetles = 0;
-            beetle.setVisible(false);
-        }
-        else {
-            beetle.setVisible(true);
-        }
+        if (alive) {
+            coloradoPotatoBeetles -= number;
         
-        color();
-        jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
+            if (coloradoPotatoBeetles <= 0) {
+                coloradoPotatoBeetles = 0;
+                beetle.setVisible(false);
+            }
+            else {
+                beetle.setVisible(true);
+            }
+
+            color();
+            jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
+        }
     }
     
     //Количество плодов
@@ -105,15 +105,19 @@ public abstract class Plant extends javax.swing.JPanel {
     public void die() {
         alive = false;
         coloradoPotatoBeetles = 0;
+        setBackground(new java.awt.Color(0, 0, 0));
         //change picture
     }
 
+    //Обработка растения
     public void treatPlant(int efficiency) {
         protection += (int)(Math.random() * 30 + Math.abs(efficiency - 30)) * 30 / 100;
     }
     
     //Растение вырастает
     public abstract Plant grow();
+    //Рост листьев
+    public abstract void leavesGrow();
     
     /**
      * This method is called from within the constructor to initialize the form.

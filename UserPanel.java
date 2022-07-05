@@ -416,7 +416,7 @@ public class UserPanel extends javax.swing.JPanel {
                     public void run() {
                             stepButtonMouseClicked(evt);
                     }
-            }, 0, 2000); // каждые 5 секунд
+            }, 0, 1000); // каждые 5 секунд
         }
     }//GEN-LAST:event_startButtonMouseClicked
 
