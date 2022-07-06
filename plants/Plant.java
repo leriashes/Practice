@@ -66,9 +66,11 @@ public abstract class Plant extends javax.swing.JPanel {
         }
         else if (coloradoPotatoBeetles < 20){
             setBackground(new java.awt.Color(255, 155, 102));
+            //setBackground(new java.awt.Color(255, 0, 0));
         }
         else {
             setBackground(new java.awt.Color(255, 105, 102));
+            //setBackground(new java.awt.Color(200, 0, 0));
         }
     }
     
@@ -106,6 +108,7 @@ public abstract class Plant extends javax.swing.JPanel {
         alive = false;
         coloradoPotatoBeetles = 0;
         setBackground(new java.awt.Color(0, 0, 0));
+        beetle.setVisible(false);
         //change picture
     }
 

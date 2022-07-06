@@ -452,25 +452,29 @@ public class UserPanel extends javax.swing.JPanel {
 
     //Нажатие кнопки шаг
     private void stepButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stepButtonMouseClicked
-        int week = Integer.parseInt(countWeekLabel.getText()) + 1;
-        applyButton.setEnabled(false);
+        
+        if (stepButton.isEnabled() || stopButton.isEnabled()) {
+            int week = Integer.parseInt(countWeekLabel.getText()) + 1;
+            applyButton.setEnabled(false);
 
-        if (week <= 20 && field.getAlivePlantsNumber() >= 0) {
-            countWeekLabel.setText(String.valueOf(week));
-            field.nextWeek(week);
-            //updateInfo();
+            if (week <= 20 && field.getAlivePlantsNumber() >= 0) {
+                countWeekLabel.setText(String.valueOf(week));
+                field.nextWeek(week);
+                //updateInfo();
 
-            if (week == 20 || field.getAlivePlantsNumber() == 0) {
-                if (stopButton.isEnabled()) {
-                    stopButtonMouseClicked(evt);
+                if (week == 20 || field.getAlivePlantsNumber() == 0) {
+                    if (stopButton.isEnabled()) {
+                        stopButtonMouseClicked(evt);
+                    }
+
+                    stepButton.setEnabled(false);
+                    startButton.setEnabled(false);
                 }
 
-                stepButton.setEnabled(false);
-                startButton.setEnabled(false);
+                updateInfo();
             }
-            
-            updateInfo();
         }
+        
     }//GEN-LAST:event_stepButtonMouseClicked
 
     private void applyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_applyButtonMouseClicked
