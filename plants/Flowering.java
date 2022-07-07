@@ -1,7 +1,5 @@
 package potatobeetlesapp.plants;
 
-import potatobeetlesapp.TreatmentDrug;
-
 public class Flowering extends Plant {
 
     public Flowering(int protection, int leaves) {
@@ -23,7 +21,7 @@ public class Flowering extends Plant {
 
     @Override
     public void leavesGrow() {
-        leaves += (int)(Math.random() * 5) * 1000;
+        leaves += (int)(Math.random() * 6 + 3) * 1000;
         leaves -= coloradoPotatoBeetles * 85 * 7;
         if (leaves <= 0) {
             die();

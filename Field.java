@@ -6,35 +6,39 @@ public class Field extends javax.swing.JPanel {
     private int plantsNumber;       //Количество растений
     private int alivePlantsNumber;  //Количество живых растений
     private int infectPlantsNumber; //Количество растений с жуками
-    private int maxPotatoNumber;    //Максимальный урожай
-    private int potatoNumber;       //Возможный урожай на текущий момент
     private Plant[] plants;         //Растения
     
     private boolean collectingBugs; //Сбор жуков
-    protected TreatmentDrug drug;   //Препарат для обработки
-    private int numTubersTreatment;
-    private int numPlantsTreatment;
+    private TreatmentDrug drug;   //Препарат для обработки
+    private int numTubersTreatment; //Количество обработанных клубней
+    private int numPlantsTreatment; //Количество обработанных растений
     
     //Конструктор
     public Field() {
         initComponents();
         plantsNumber = 100;
         plants = new Plant[plantsNumber];
+        
+        collectingBugs = false;
         drug = new TreatmentDrug();
         numTubersTreatment = 0;
         numPlantsTreatment = 0;
+        
         start();
     }
     
     //Старт (инициализация растений)
-    private void start() {
+    public void start() {
         alivePlantsNumber = plantsNumber;
         infectPlantsNumber = 0;
         
+        //Удаление старых растений при наличии
         for (int i = 0; i < plantsNumber; i++) {
+            if (plants[i] != null) remove(plants[i]);
             plants[i] = null;
         }
         
+        //Обработка клубней
         int j;
         for (int i = 0; i < numTubersTreatment; i++) {
             j = (int)(Math.random() * plantsNumber);
@@ -47,47 +51,24 @@ public class Field extends javax.swing.JPanel {
             }
         }
         
-        for (int i = 0; i < plantsNumber; i++) {
+        //Добавление необработанных клубней
+        for (int i = 0; i < plantsNumber && numTubersTreatment != plantsNumber; i++) {
             if (plants[i] == null) {
                 plants[i] = new Tuber(i);
             }
             add(plants[i]);
         }
         
-        maxPotatoNumber = plantsNumber * 8;
-        updateInfo();
-    }
-    
-    //Заново
-    public void restart() {
-        for (int i = 0; i < plantsNumber; i++) {
-            remove(plants[i]);
-        }
-        //repaint();
-        start();
         repaint();
-    }
-    
-    //Максимальное количество плодов
-    public int getMaxPotatoNumber() {
-        return maxPotatoNumber;
-    }
-    
-    //Возможное количество плодов на текущий момент
-    public int getPotatoNumber() {
-        updateInfo();
-        return potatoNumber;
     }
     
     //Количество растений
     public int getPlantsNumber() {
-        updateInfo();
         return plantsNumber;
     }
     
     //Количество живых растений
     public int getAlivePlantsNumber() {
-        updateInfo();
         return alivePlantsNumber;
     }
     
@@ -96,10 +77,20 @@ public class Field extends javax.swing.JPanel {
         return infectPlantsNumber;
     }
     
+    //Установка параметров
+    public void setProperties(int numTubers, int numPlants, int effTubersTreatment, int effPlantsTreatment, boolean collectingBugs) {
+        numTubersTreatment = numTubers;
+        numPlantsTreatment = numPlants;
+        drug.setEffTubers(effTubersTreatment);
+        drug.setEffPlants(effPlantsTreatment);
+        this.collectingBugs = collectingBugs;
+    }
+    
     //Следующая неделя
     public void nextWeek(int numWeek) {
         boolean[] treatment = new boolean[plantsNumber];
         
+        //Определение номеров растений для обработки ростков
         if (numWeek == 5) {
             
             for (int i = 0; i < plantsNumber; i++) {
@@ -119,8 +110,9 @@ public class Field extends javax.swing.JPanel {
             }
         }
         
+        //Выход жуков из земли
         if (numWeek == 1) {
-            infectPlantsNumber = (int)(Math.random() * (plantsNumber / 2) + 1);
+            infectPlantsNumber = (int)(Math.random() * (plantsNumber / 2 + 1) + 1);
             
             int j;
             for (int i = 0; i < infectPlantsNumber; i++) {
@@ -141,6 +133,7 @@ public class Field extends javax.swing.JPanel {
                 
                 int num = 0;
                 
+                //Обработка растений, рост, поедание жуками
                 if (plants[i].isAlive()) {
                     
                     num = plants[i].getBeetlesNumber();
@@ -159,10 +152,15 @@ public class Field extends javax.swing.JPanel {
                     }
                 }
                 
+                //Размножение и переселение жуков
                 if (plants[i].isAlive()) {
+                    
+                    //Суммирование жуков на сосдених растениях
                     switch (i % 10) {
+                        //Первый столбец
                         case 0 -> {
                             bugs[i] = plants[i + 1].getBeetlesNumber();
+                            
                             if (i != 0) {
                                 bugs[i] += plants[i - 10].getBeetlesNumber() + plants[i - 9].getBeetlesNumber();
                             }   
@@ -171,6 +169,7 @@ public class Field extends javax.swing.JPanel {
                                 bugs[i] += plants[i + 10].getBeetlesNumber() + plants[i + 11].getBeetlesNumber();
                             }
                         }
+                        //Последний столбец
                         case 9 -> {
                             bugs[i] = plants[i - 1].getBeetlesNumber();
                             if (i != 9) {
@@ -181,6 +180,7 @@ public class Field extends javax.swing.JPanel {
                                 bugs[i] += plants[i + 10].getBeetlesNumber() + plants[i + 9].getBeetlesNumber();
                             }
                         }
+                        //Остальные столбцы
                         default -> {
                             bugs[i] = plants[i - 1].getBeetlesNumber() + plants[i + 1].getBeetlesNumber();
                             if (i > 10) {
@@ -207,6 +207,7 @@ public class Field extends javax.swing.JPanel {
                     }
                 }
                 else if (num > 0 && !plants[i].isAlive()) {
+                    //Переселение жуков с погибшего растения
                     switch (i % 10) {
                         case 0 -> {
                             plants[i + 1].beetlesCome(num / 9);
@@ -252,6 +253,9 @@ public class Field extends javax.swing.JPanel {
                 }
             }
             
+            alivePlantsNumber = 0;
+            
+            //Переселение жуков, подсчёт категорий растений
             for (int i = 0; i < plantsNumber; i++) {
                 if (bugs[i] > 0) {
                     plants[i].beetlesCome(bugs[i]);
@@ -263,31 +267,14 @@ public class Field extends javax.swing.JPanel {
                 if (plants[i].isInfected()) {
                     infectPlantsNumber += 1;
                 }
+                
+                if (plants[i].isAlive()) {
+                    alivePlantsNumber++;
+                }
             }
         }
+        
         repaint();
-    }
-    
-    //Обновление информации
-    private void updateInfo() {
-        potatoNumber = 0;
-        alivePlantsNumber = 0;
-        for (int i = 0; i < plantsNumber; i++) {
-            if (plants[i].isAlive()) {
-                alivePlantsNumber++;
-                potatoNumber += plants[i].getPotatoNumber();
-                //proverka na jukov
-            }
-        }
-    }
-
-    public void setProperties(int numTubers, int numPlants, int effTubersTreatment, int effPlantsTreatment, boolean collectingBugs) {
-        numTubersTreatment = numTubers;
-        numPlantsTreatment = numPlants;
-        drug.setEffTubers(effTubersTreatment);
-        drug.setEffPlants(effPlantsTreatment);
-        this.collectingBugs = collectingBugs;
-        //start();
     }
     
     /**

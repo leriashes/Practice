@@ -29,7 +29,8 @@ public class Tuber extends Plant {
     
     //Обработка клубня
     public final void treatTuber(int efficiency) {
-        protection = (int)(Math.random() * 30 + Math.abs(efficiency - 30)) * 70 / 100;
+        if (efficiency - 30 < 0) efficiency = 30;
+        protection = (int)(Math.random() * 31 + efficiency - 30) * 70 / 100;
     }
 
     @Override

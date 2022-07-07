@@ -4,8 +4,6 @@ package potatobeetlesapp.plants;
 public abstract class Plant extends javax.swing.JPanel {
 
     protected int leaves; //Листья (вес в мг)
-    protected int potatoNumber; //Количество плодов (картофелин)
-    //protected int ripeness;     //Зрелость
     protected boolean alive;    //Живое/неживое
     protected int coloradoPotatoBeetles;    //Количество жуков
     protected int protection;   //Защита от жуков
@@ -14,8 +12,6 @@ public abstract class Plant extends javax.swing.JPanel {
     public Plant() {
         initComponents();
         leaves = 0;
-        potatoNumber = 8;
-        //ripeness = 0;
         alive = true;
         coloradoPotatoBeetles = 0;
         protection = 0;
@@ -39,22 +35,22 @@ public abstract class Plant extends javax.swing.JPanel {
     }
     
     //Увеличение количества жуков
-    public void beetlesCome(int number) {
+    public void beetlesCome(int numBeetles) {
         
         if (alive) {
-            coloradoPotatoBeetles += number * (100 - protection) / 100;
+            coloradoPotatoBeetles += numBeetles * (100 - protection) / 100;
             color();
 
             if (coloradoPotatoBeetles > 0)
                 beetle.setVisible(true);
 
-            jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
+            numberLabel.setText(String.valueOf(coloradoPotatoBeetles));
         }
         
     }
     
     //Установка цвета фона
-    public void color() {
+    private void color() {
         if (coloradoPotatoBeetles == 0) {
             setBackground(new java.awt.Color(147, 118, 89));
         }
@@ -66,11 +62,9 @@ public abstract class Plant extends javax.swing.JPanel {
         }
         else if (coloradoPotatoBeetles < 20){
             setBackground(new java.awt.Color(255, 155, 102));
-            //setBackground(new java.awt.Color(255, 0, 0));
         }
         else {
             setBackground(new java.awt.Color(255, 105, 102));
-            //setBackground(new java.awt.Color(200, 0, 0));
         }
     }
     
@@ -89,13 +83,8 @@ public abstract class Plant extends javax.swing.JPanel {
             }
 
             color();
-            jLabel1.setText(String.valueOf(coloradoPotatoBeetles));
+            numberLabel.setText(String.valueOf(coloradoPotatoBeetles));
         }
-    }
-    
-    //Количество плодов
-    public int getPotatoNumber() {
-        return potatoNumber;
     }
     
     //Количество жуков
@@ -104,17 +93,17 @@ public abstract class Plant extends javax.swing.JPanel {
     }
     
     //Растение погибает
-    public void die() {
+    protected void die() {
         alive = false;
         coloradoPotatoBeetles = 0;
         setBackground(new java.awt.Color(0, 0, 0));
         beetle.setVisible(false);
-        //change picture
     }
 
     //Обработка растения
     public void treatPlant(int efficiency) {
-        protection += (int)(Math.random() * 30 + Math.abs(efficiency - 30)) * 30 / 100;
+        if (efficiency - 30 < 0) efficiency = 30;
+        protection += (int)(Math.random() * 31 + efficiency - 30) * 30 / 100;
     }
     
     //Растение вырастает
@@ -133,7 +122,7 @@ public abstract class Plant extends javax.swing.JPanel {
 
         beetle = new javax.swing.JLabel();
         plant = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        numberLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(147, 118, 89));
         setLayout(null);
@@ -149,16 +138,16 @@ public abstract class Plant extends javax.swing.JPanel {
         add(plant);
         plant.setBounds(0, 0, 60, 60);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("0");
-        add(jLabel1);
-        jLabel1.setBounds(30, 10, 40, 17);
+        numberLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        numberLabel.setText("0");
+        add(numberLabel);
+        numberLabel.setBounds(30, 10, 40, 17);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel beetle;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel numberLabel;
     private javax.swing.JLabel plant;
     // End of variables declaration//GEN-END:variables
 }
